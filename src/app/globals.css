@@ -130,3 +130,14 @@ html {
 .badge-community { background-color: #fce7f3; color: #be185d; }
 .badge-culture { background-color: #fae8ff; color: #a21caf; }
 .badge-general { background-color: #f1f5f9; color: #475569; }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
