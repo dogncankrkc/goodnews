@@ -18,8 +18,17 @@ import OpenAI from "openai";
  */
 export async function GET(request: Request) {
   // Verify cron secret for security
+  const { searchParams } = new URL(request.url);
+  const key = searchParams.get('key');
+
+  // 2. Header'dan Bearer token'ı al (Vercel Cron için)
   const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  const isAuthorized =
+    key === process.env.CRON_SECRET ||
+    authHeader === `Bearer ${process.env.CRON_SECRET}` ||
+    process.env.NODE_ENV === 'development'; // Lokal geliştirme için bypass
+
+  if (!isAuthorized) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -114,8 +123,9 @@ export async function GET(request: Request) {
       console.error("Retention policy deletion failed:", deleteError);
     }
   } catch (feedError) {
-    console.error("Error fetching feeds:", feedError);
+    console.error("CRITICAL ERROR: Failed to fetch RSS feeds or connect to database.", feedError);
     results.errors++;
+    return NextResponse.json({ error: "Failed to fetch feeds or process news", details: feedError }, { status: 500 });
   }
 
   return NextResponse.json({

@@ -57,49 +57,61 @@ SADECE geçerli JSON ile yanıt ver (markdown yok, kod bloku yok):
 
 Veya sadece şu yanıtı ver: null`;
 
-  try {
-    const response = await getClient().models.generateContent({
-      model: "gemini-2.0-flash",
-      contents: prompt,
-    });
+  const maxRetries = 3;
+  const retryDelayMs = 3000;
 
-    const text = response.text?.trim() || "";
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await getClient().models.generateContent({
+        model: "gemini-3.1-flash-lite",
+        contents: prompt,
+      });
 
-    if (text === "null" || text === "") {
-      return null;
+      const text = response.text?.trim() || "";
+
+      if (text === "null" || text === "") {
+        return null;
+      }
+
+      // Try to parse JSON from the response, handling potential markdown wrapping
+      let jsonStr = text;
+      const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+      if (jsonMatch) {
+        jsonStr = jsonMatch[1].trim();
+      }
+
+      const parsed = JSON.parse(jsonStr) as AnalyzedNews;
+
+      // Validate required fields
+      if (
+        !parsed.tr_title ||
+        !parsed.tr_content ||
+        !parsed.en_title ||
+        !parsed.en_content
+      ) {
+        console.error("Gemini response missing required fields:", parsed);
+        return null;
+      }
+
+      return {
+        tr_title: parsed.tr_title,
+        tr_content: parsed.tr_content,
+        en_title: parsed.en_title,
+        en_content: parsed.en_content,
+        category: parsed.category || "general",
+        is_breaking: !!parsed.is_breaking,
+        image_prompt: parsed.image_prompt || "",
+      };
+    } catch (error) {
+      if (attempt < maxRetries) {
+        console.warn(`Hata alındı, tekrar deneniyor... (Deneme ${attempt}/${maxRetries})`);
+        await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
+      } else {
+        console.error("Gemini analysis failed after maximum retries:", error);
+        return null;
+      }
     }
-
-    // Try to parse JSON from the response, handling potential markdown wrapping
-    let jsonStr = text;
-    const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
-    if (jsonMatch) {
-      jsonStr = jsonMatch[1].trim();
-    }
-
-    const parsed = JSON.parse(jsonStr) as AnalyzedNews;
-
-    // Validate required fields
-    if (
-      !parsed.tr_title ||
-      !parsed.tr_content ||
-      !parsed.en_title ||
-      !parsed.en_content
-    ) {
-      console.error("Gemini response missing required fields:", parsed);
-      return null;
-    }
-
-    return {
-      tr_title: parsed.tr_title,
-      tr_content: parsed.tr_content,
-      en_title: parsed.en_title,
-      en_content: parsed.en_content,
-      category: parsed.category || "general",
-      is_breaking: !!parsed.is_breaking,
-      image_prompt: parsed.image_prompt || "",
-    };
-  } catch (error) {
-    console.error("Gemini analysis failed:", error);
-    return null;
   }
+
+  return null;
 }

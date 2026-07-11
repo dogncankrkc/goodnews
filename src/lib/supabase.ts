@@ -95,9 +95,10 @@ export async function getNewsByLanguage(
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  // Return empty array if Supabase is not configured (dev mode)
+  // Throw error if Supabase is not configured to help with debugging
   if (!supabaseUrl || !supabaseAnonKey) {
-    return [];
+    console.error("Missing Supabase Anon Key or URL in getNewsByLanguage");
+    throw new Error("Database configuration is missing. Check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY");
   }
 
   const supabase = createSupabaseClient(supabaseUrl, supabaseAnonKey);
@@ -116,7 +117,7 @@ export async function getNewsByLanguage(
 
   if (error) {
     console.error("Error fetching news:", error);
-    return [];
+    throw new Error(`Failed to fetch news: ${error.message}`);
   }
 
   return ((data as NewsRow[]) || []).map((row) => resolveLocale(row, language));
@@ -133,7 +134,8 @@ export async function getNewsById(
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    return null;
+    console.error("Missing Supabase Anon Key or URL in getNewsById");
+    throw new Error("Database configuration is missing.");
   }
 
   const supabase = createSupabaseClient(supabaseUrl, supabaseAnonKey);
@@ -146,7 +148,7 @@ export async function getNewsById(
 
   if (error) {
     console.error("Error fetching news by ID:", error);
-    return null;
+    throw new Error(`Failed to fetch news by ID: ${error.message}`);
   }
 
   return resolveLocale(data as NewsRow, language);
