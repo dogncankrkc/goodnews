@@ -1,0 +1,80 @@
+import type { Metadata } from "next";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { notFound } from "next/navigation";
+import { getDictionary, hasLocale } from "@/lib/i18n/dictionaries";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
+const inter = Inter({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-plus-jakarta",
+  display: "swap",
+});
+
+export async function generateStaticParams() {
+  return [{ lang: "tr" }, { lang: "en" }];
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+
+  if (!hasLocale(lang)) {
+    return { title: "Good News" };
+  }
+
+  const dict = await getDictionary(lang);
+
+  return {
+    title: dict.metadata.title,
+    description: dict.metadata.description,
+    openGraph: {
+      title: dict.metadata.title,
+      description: dict.metadata.description,
+      type: "website",
+    },
+    icons: {
+      icon: "/logo-icon.png",
+      apple: "/logo-icon.png",
+    },
+  };
+}
+
+export default async function LangLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+
+  if (!hasLocale(lang)) {
+    notFound();
+  }
+
+  const dict = await getDictionary(lang);
+
+  return (
+    <html
+      lang={lang}
+      className={`${inter.variable} ${plusJakarta.variable} antialiased`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-screen flex flex-col bg-background text-foreground" suppressHydrationWarning>
+        <Navbar lang={lang} />
+        <main className="flex-1">{children}</main>
+        <Footer dict={dict} />
+      </body>
+    </html>
+  );
+}

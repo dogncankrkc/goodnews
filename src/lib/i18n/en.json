@@ -1,0 +1,50 @@
+{
+  "metadata": {
+    "title": "Good News — Today's Best Positive Stories",
+    "description": "Good news from around the world. Carefully curated positive, hopeful, and inspiring stories."
+  },
+  "nav": {
+    "home": "Home",
+    "categories": "Categories",
+    "about": "About",
+    "brand": "good news"
+  },
+  "hero": {
+    "badge": "✨ Handpicked Stories",
+    "title": "Positive Stories",
+    "titleHighlight": "From Around the World",
+    "subtitle": "Every day, our editorial team carefully curates the most positive, hopeful, and inspiring news. Because good things deserve headlines too.",
+    "cta": "Explore Stories"
+  },
+  "news": {
+    "sectionTitle": "Latest Stories",
+    "sectionSubtitle": "The best stories, curated just for you",
+    "breakingNewsBanner": "✨ Breaking Good News",
+    "readMore": "Read More",
+    "readTime": "min read",
+    "noNews": "No stories yet. We'll be here soon with wonderful news!",
+    "backToHome": "Back to Home",
+    "share": "Share",
+    "publishedAt": "Published",
+    "author": "Author"
+  },
+  "categories": {
+    "all": "All News",
+    "general": "General",
+    "technology": "Tech & AI",
+    "digital_security": "Digital Security",
+    "science": "Science",
+    "health": "Health",
+    "nature": "Nature & Environment",
+    "humanity": "Humanity",
+    "education": "Education",
+    "sports_action": "Action & Sports",
+    "culture_arts": "Culture & Arts",
+    "good_business": "Good Business"
+  },
+  "footer": {
+    "tagline": "Carefully curated stories full of hope.",
+    "rights": "All rights reserved.",
+    "madeWith": "Made with"
+  }
+}

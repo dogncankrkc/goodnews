@@ -1,0 +1,50 @@
+{
+  "metadata": {
+    "title": "Güzel Haberler — Günün En İyi Haberleri",
+    "description": "Dünyadan güzel haberler. Özenle seçilmiş pozitif, umut verici ve ilham veren haberler."
+  },
+  "nav": {
+    "home": "Ana Sayfa",
+    "categories": "Kategoriler",
+    "about": "Hakkımızda",
+    "brand": "güzel haberler"
+  },
+  "hero": {
+    "badge": "✨ Özenle Seçilmiş Haberler",
+    "title": "Dünyadan",
+    "titleHighlight": "Güzel Haberler",
+    "subtitle": "Her gün editör ekibimiz tarafından özenle seçilen pozitif, umut verici ve ilham veren haberler. Çünkü güzel şeyler de haber değeri taşır.",
+    "cta": "Haberleri Keşfet"
+  },
+  "news": {
+    "sectionTitle": "Son Haberler",
+    "sectionSubtitle": "Küratörlüğünü yaptığımız en iyi haberler",
+    "breakingNewsBanner": "✨ Son Güzellikler",
+    "readMore": "Devamını Oku",
+    "readTime": "dk okuma",
+    "noNews": "Henüz haber bulunmuyor. Yakında güzel haberlerle burada olacağız!",
+    "backToHome": "Ana Sayfaya Dön",
+    "share": "Paylaş",
+    "publishedAt": "Yayınlanma",
+    "author": "Yazar"
+  },
+  "categories": {
+    "all": "Tüm Haberler",
+    "general": "Gündem",
+    "technology": "Teknoloji ve Yapay Zeka",
+    "digital_security": "Dijital Güvenlik",
+    "science": "Bilim",
+    "health": "Sağlık",
+    "nature": "Doğa ve Çevre",
+    "humanity": "İnsanlık",
+    "education": "Eğitim",
+    "sports_action": "Aksiyon ve Spor",
+    "culture_arts": "Kültür Sanat",
+    "good_business": "İyi İşler"
+  },
+  "footer": {
+    "tagline": "Özenle seçilmiş, umut dolu haberler.",
+    "rights": "Tüm hakları saklıdır.",
+    "madeWith": "ile yapıldı"
+  }
+}
