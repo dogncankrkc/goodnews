@@ -26,7 +26,7 @@ export async function GET(request: Request) {
   const isAuthorized =
     key === process.env.CRON_SECRET ||
     authHeader === `Bearer ${process.env.CRON_SECRET}` ||
-    process.env.NODE_ENV === 'development'; // Lokal geliştirme için bypass
+    process.env.NODE_ENV === 'development';
 
   if (!isAuthorized) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -109,6 +109,9 @@ export async function GET(request: Request) {
         console.error("Error processing item:", itemError);
         results.errors++;
       }
+
+      // Hız sınırı: Her 3 saniyede 1 istek (istekleri yavaşlatmak için)
+      await new Promise(resolve => setTimeout(resolve, 3000));
     }
 
     // Retention Policy: Delete records older than 7 days
