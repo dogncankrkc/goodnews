@@ -3,7 +3,7 @@ import { getDictionary } from "@/lib/i18n/dictionaries";
 import Link from "next/link";
 import Image from "next/image";
 import CategoryDropdown from "./CategoryDropdown";
-import logoIcon from "../../public/logo-icon.png";
+import logoIcon from "../../public/logo-icon-latest.png";
 
 export default async function Navbar({ lang }: { lang: Locale }) {
   const dict = await getDictionary(lang);

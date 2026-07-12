@@ -43,8 +43,8 @@ export async function generateMetadata({
       type: "website",
     },
     icons: {
-      icon: "/logo-icon.png",
-      apple: "/logo-icon.png",
+      icon: "/logo-icon-latest.png",
+      apple: "/logo-icon-latest.png",
     },
   };
 }
