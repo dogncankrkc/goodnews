@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getDictionary, hasLocale } from "@/lib/i18n/dictionaries";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -84,9 +85,11 @@ export default async function LangLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen flex flex-col bg-background text-foreground" suppressHydrationWarning>
-        <Navbar lang={lang} />
-        <main className="flex-1">{children}</main>
-        <Footer dict={dict} />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Navbar lang={lang} />
+          <main className="flex-1">{children}</main>
+          <Footer dict={dict} />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
 @plugin "@tailwindcss/typography";
 
 @theme inline {
@@ -23,8 +24,7 @@
 }
 
 body {
-  background-color: var(--color-background);
-  color: var(--color-foreground);
+  @apply bg-white text-gray-900 dark:bg-slate-900 dark:text-gray-300 transition-colors duration-300;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -43,14 +43,12 @@ html {
 
 /* Subtle gradient backgrounds */
 .gradient-hero {
-  background: linear-gradient(
-    135deg,
-    #f0f4ff 0%,
-    #e8f5e9 25%,
-    #fff8e1 50%,
-    #fce4ec 75%,
-    #f3e5f5 100%
-  );
+  background: linear-gradient(135deg,
+      #f0f4ff 0%,
+      #e8f5e9 25%,
+      #fff8e1 50%,
+      #fce4ec 75%,
+      #f3e5f5 100%);
 }
 
 .gradient-text {
@@ -73,8 +71,15 @@ html {
 
 /* Animated floating effect for hero elements */
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .animate-float {
@@ -82,8 +87,15 @@ html {
 }
 
 @keyframes float-delayed {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 .animate-float-delayed {
@@ -96,6 +108,7 @@ html {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -107,15 +120,33 @@ html {
 }
 
 /* Staggered animation delays */
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
+}
+
+.delay-400 {
+  animation-delay: 400ms;
+}
 
 /* Badge pulse */
 @keyframes pulse-soft {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
 }
 
 .animate-pulse-soft {
@@ -128,6 +159,7 @@ html {
     opacity: 0;
     transform: translateX(60px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -139,6 +171,7 @@ html {
     opacity: 1;
     transform: translateX(0);
   }
+
   to {
     opacity: 0;
     transform: translateX(-60px);
@@ -150,6 +183,7 @@ html {
     opacity: 0;
     transform: translateX(-60px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -161,6 +195,7 @@ html {
     opacity: 1;
     transform: translateX(0);
   }
+
   to {
     opacity: 0;
     transform: translateX(60px);
@@ -185,24 +220,53 @@ html {
 
 /* Slider gradient overlay */
 .slider-gradient {
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.75) 0%,
-    rgba(0, 0, 0, 0.35) 40%,
-    rgba(0, 0, 0, 0.05) 70%,
-    transparent 100%
-  );
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.35) 40%,
+      rgba(0, 0, 0, 0.05) 70%,
+      transparent 100%);
 }
 
 /* Category badge colors */
-.badge-technology { background-color: #ede9fe; color: #6d28d9; }
-.badge-science { background-color: #dbeafe; color: #1d4ed8; }
-.badge-health { background-color: #d1fae5; color: #047857; }
-.badge-environment { background-color: #ecfdf5; color: #059669; }
-.badge-education { background-color: #fef3c7; color: #b45309; }
-.badge-community { background-color: #fce7f3; color: #be185d; }
-.badge-culture { background-color: #fae8ff; color: #a21caf; }
-.badge-general { background-color: #f1f5f9; color: #475569; }
+.badge-technology {
+  background-color: #ede9fe;
+  color: #6d28d9;
+}
+
+.badge-science {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.badge-health {
+  background-color: #d1fae5;
+  color: #047857;
+}
+
+.badge-environment {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.badge-education {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.badge-community {
+  background-color: #fce7f3;
+  color: #be185d;
+}
+
+.badge-culture {
+  background-color: #fae8ff;
+  color: #a21caf;
+}
+
+.badge-general {
+  background-color: #f1f5f9;
+  color: #475569;
+}
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 *::-webkit-scrollbar {
@@ -211,6 +275,8 @@ html {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 * {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }

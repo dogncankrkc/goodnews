@@ -3,6 +3,7 @@ import { getDictionary } from "@/lib/i18n/dictionaries";
 import Link from "next/link";
 import Image from "next/image";
 import CategoryDropdown from "./CategoryDropdown";
+import { ThemeToggle } from "./ThemeToggle";
 import logoIcon from "../../public/logo-icon-latest.png";
 import logoFullEn from "../../public/logo-full.png";
 import logoFullTr from "../../public/logo-full-tr.png";
@@ -13,7 +14,7 @@ export default async function Navbar({ lang }: { lang: Locale }) {
   const otherLangLabel = lang === "tr" ? "EN" : "TR";
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-border">
+    <nav className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-white/10 border-b border-border">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between md:h-30 h-20">
           {/* Logo */}
@@ -88,6 +89,7 @@ export default async function Navbar({ lang }: { lang: Locale }) {
               </svg>
               {otherLangLabel}
             </Link>
+            <ThemeToggle />
           </div>
         </div>
       </div>
