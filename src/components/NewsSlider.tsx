@@ -7,14 +7,14 @@ import type { NewsItem } from "@/lib/supabase";
 
 function getCategoryBadgeClass(category: string): string {
   const classes: Record<string, string> = {
-    technology: "badge-technology",
-    science: "badge-science",
-    health: "badge-health",
-    environment: "badge-environment",
-    education: "badge-education",
-    community: "badge-community",
-    culture: "badge-culture",
-    general: "badge-general",
+    technology: "text-purple-700 dark:text-purple-300",
+    science: "text-blue-700 dark:text-blue-300",
+    health: "text-emerald-700 dark:text-emerald-300",
+    environment: "text-green-700 dark:text-green-300",
+    education: "text-amber-700 dark:text-amber-300",
+    community: "text-pink-700 dark:text-pink-300",
+    culture: "text-fuchsia-700 dark:text-fuchsia-300",
+    general: "text-slate-700 dark:text-slate-300",
   };
   return classes[category] || classes.general;
 }
@@ -111,7 +111,7 @@ export default function NewsSlider({ news, lang, dict }: NewsSliderProps) {
     >
       {/* Slider title */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-4">
-        <h2 className="text-xl sm:text-2xl font-bold text-foreground">
+        <h2 className="text-xl sm:text-2xl font-bold text-foreground dark:text-white">
           {dict.news.sliderTitle}
         </h2>
       </div>
@@ -142,7 +142,7 @@ export default function NewsSlider({ news, lang, dict }: NewsSliderProps) {
           <div className={`absolute inset-0 flex flex-col justify-end p-5 sm:p-8 lg:p-10 ${animationClass}`}>
             {/* Category badge */}
             <span
-              className={`self-start px-2.5 py-1 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-semibold mb-2.5 md:mb-3 backdrop-blur-sm ${getCategoryBadgeClass(
+              className={`self-start px-2.5 py-1 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-semibold mb-2.5 md:mb-3 backdrop-blur-sm bg-white/90 dark:bg-slate-900/80 ${getCategoryBadgeClass(
                 currentNews.category
               )}`}
             >

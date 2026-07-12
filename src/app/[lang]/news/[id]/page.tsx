@@ -22,14 +22,14 @@ function estimateReadTime(content: string): number {
 
 function getCategoryBadgeClass(category: string): string {
   const classes: Record<string, string> = {
-    technology: "badge-technology",
-    science: "badge-science",
-    health: "badge-health",
-    environment: "badge-environment",
-    education: "badge-education",
-    community: "badge-community",
-    culture: "badge-culture",
-    general: "badge-general",
+    technology: "text-purple-700 dark:text-purple-300",
+    science: "text-blue-700 dark:text-blue-300",
+    health: "text-emerald-700 dark:text-emerald-300",
+    environment: "text-green-700 dark:text-green-300",
+    education: "text-amber-700 dark:text-amber-300",
+    community: "text-pink-700 dark:text-pink-300",
+    culture: "text-fuchsia-700 dark:text-fuchsia-300",
+    general: "text-slate-700 dark:text-slate-300",
   };
   return classes[category] || classes.general;
 }
@@ -92,14 +92,14 @@ export default async function NewsDetailPage({
       <header className="mb-10">
         {/* Category badge */}
         <span
-          className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 ${getCategoryBadgeClass(
+          className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 bg-gray-100 dark:bg-slate-800/80 ${getCategoryBadgeClass(
             news.category
           )}`}
         >
           {categoryLabel}
         </span>
 
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground leading-tight mb-4">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground dark:text-slate-50 leading-tight mb-4">
           {news.title}
         </h1>
 
@@ -171,7 +171,7 @@ export default async function NewsDetailPage({
       )}
 
       {/* Content */}
-      <div className="prose prose-sm md:prose-base lg:prose-lg max-w-none prose-slate dark:prose-invert">
+      <div className="prose prose-sm md:prose-base lg:prose-lg max-w-none prose-slate dark:prose-invert dark:prose-headings:text-white">
         <ReactMarkdown>{news.content}</ReactMarkdown>
       </div>
 

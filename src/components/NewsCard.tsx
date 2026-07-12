@@ -6,14 +6,14 @@ import Image from "next/image";
 
 function getCategoryBadgeClass(category: string): string {
   const classes: Record<string, string> = {
-    technology: "badge-technology",
-    science: "badge-science",
-    health: "badge-health",
-    environment: "badge-environment",
-    education: "badge-education",
-    community: "badge-community",
-    culture: "badge-culture",
-    general: "badge-general",
+    technology: "text-purple-700 dark:text-purple-300",
+    science: "text-blue-700 dark:text-blue-300",
+    health: "text-emerald-700 dark:text-emerald-300",
+    environment: "text-green-700 dark:text-green-300",
+    education: "text-amber-700 dark:text-amber-300",
+    community: "text-pink-700 dark:text-pink-300",
+    culture: "text-fuchsia-700 dark:text-fuchsia-300",
+    general: "text-slate-700 dark:text-slate-300",
   };
   return classes[category] || classes.general;
 }
@@ -44,7 +44,7 @@ export default function NewsCard({
 
   return (
     <article
-      className={`card-hover bg-card rounded-2xl border border-border overflow-hidden animate-fade-in-up`}
+      className={`card-hover bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden animate-fade-in-up`}
       style={{ animationDelay: `${index * 100}ms` }}
       id={`news-card-${news.id}`}
     >
@@ -81,7 +81,7 @@ export default function NewsCard({
         )}
         {/* Category badge */}
         <span
-          className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold ${getCategoryBadgeClass(
+          className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold bg-white/90 dark:bg-slate-900/80 backdrop-blur-sm ${getCategoryBadgeClass(
             news.category
           )}`}
         >
@@ -91,16 +91,16 @@ export default function NewsCard({
 
       {/* Content */}
       <div className="p-5">
-        <h3 className="text-lg font-bold text-foreground leading-snug mb-2 line-clamp-2 hover:text-primary transition-colors duration-200">
+        <h3 className="text-lg font-bold text-foreground dark:text-white leading-snug mb-2 line-clamp-2 hover:text-primary transition-colors duration-200">
           <Link href={`/${lang}/news/${news.id}`}>{news.title}</Link>
         </h3>
 
-        <p className="text-sm text-muted leading-relaxed line-clamp-3 mb-4">
+        <p className="text-sm text-muted dark:text-gray-300 leading-relaxed line-clamp-3 mb-4">
           {news.content.substring(0, 150) + "..."}
         </p>
 
         {/* Meta info */}
-        <div className="flex items-center justify-between text-xs text-muted">
+        <div className="flex items-center justify-between text-xs text-muted dark:text-gray-400">
           <div className="flex items-center gap-1.5">
             <svg
               className="w-3.5 h-3.5"

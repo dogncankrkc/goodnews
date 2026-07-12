@@ -2,7 +2,7 @@ import type { Dictionary } from "@/lib/i18n/dictionaries";
 
 export default function Hero({ dict }: { dict: Dictionary }) {
   return (
-    <section className="gradient-hero relative overflow-hidden" id="hero">
+    <section className="gradient-hero dark:!bg-none dark:bg-slate-900 relative overflow-hidden" id="hero">
       {/* Decorative floating shapes */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-float" />
@@ -18,13 +18,13 @@ export default function Hero({ dict }: { dict: Dictionary }) {
           </div>
 
           {/* Title */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6 animate-fade-in-up delay-100">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6 animate-fade-in-up delay-100 text-gray-900 dark:text-white">
             {dict.hero.title}{" "}
             <span className="gradient-text">{dict.hero.titleHighlight}</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg sm:text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-10 animate-fade-in-up delay-200">
+          <p className="text-lg sm:text-xl text-muted dark:text-slate-300 leading-relaxed max-w-2xl mx-auto mb-10 animate-fade-in-up delay-200">
             {dict.hero.subtitle}
           </p>
 
@@ -64,7 +64,7 @@ export default function Hero({ dict }: { dict: Dictionary }) {
         >
           <path
             d="M0 40C240 80 480 0 720 40C960 80 1200 0 1440 40V80H0V40Z"
-            fill="var(--color-background)"
+            className="fill-white dark:fill-slate-900 transition-colors duration-300"
           />
         </svg>
       </div>

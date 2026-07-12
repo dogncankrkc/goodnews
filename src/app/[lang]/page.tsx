@@ -47,9 +47,9 @@ export default async function HomePage({
 
       {/* Breaking News Banner (Son Güzellikler) */}
       {breakingNews.length > 0 && !category && (
-        <section className="bg-gradient-to-r from-yellow-100 to-green-100 border-y border-yellow-200 py-8">
+        <section className="bg-gradient-to-r dark:!bg-none dark:border-none from-yellow-100 to-green-100 border-y border-yellow-200 py-8">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-xl font-bold text-yellow-800 mb-6 flex items-center gap-2">
+            <h2 className="text-xl font-bold text-yellow-800 dark:text-yellow-400 mb-6 flex items-center gap-2">
               {/* @ts-ignore - dynamic dict lookup */}
               {dict.news.breakingNewsBanner || "✨ Breaking Good News"}
             </h2>
@@ -58,16 +58,16 @@ export default async function HomePage({
                 <Link
                   key={news.id}
                   href={`/${lang}/news/${news.id}`}
-                  className="snap-start shrink-0 w-80 sm:w-96 bg-white/60 backdrop-blur-sm rounded-2xl p-5 hover:bg-white/80 transition-all shadow-sm hover:shadow border border-white/50"
+                  className="snap-start shrink-0 w-80 sm:w-96 bg-white/60 dark:bg-slate-800/40 backdrop-blur-sm rounded-2xl p-5 hover:bg-white/80 dark:hover:bg-slate-800 transition-all shadow-sm hover:shadow border border-white/50 dark:border-slate-700/50"
                 >
-                  <span className="inline-block px-2.5 py-1 bg-yellow-200 text-yellow-800 text-xs font-semibold rounded-full mb-3">
+                  <span className="inline-block px-2.5 py-1 bg-yellow-200 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-200 text-xs font-semibold rounded-full mb-3">
                     {/* @ts-ignore - dynamic dict lookup */}
                     {dict.categories[news.category as keyof typeof dict.categories] || news.category}
                   </span>
-                  <h3 className="font-bold text-foreground mb-2 line-clamp-2">
+                  <h3 className="font-bold text-foreground dark:text-slate-100 mb-2 line-clamp-2">
                     {news.title}
                   </h3>
-                  <p className="text-sm text-muted line-clamp-2">
+                  <p className="text-sm text-muted dark:text-slate-300 line-clamp-2">
                     {news.content}
                   </p>
                 </Link>
@@ -84,8 +84,8 @@ export default async function HomePage({
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
-            {category 
-              ? dict.categories[category as keyof typeof dict.categories] 
+            {category
+              ? dict.categories[category as keyof typeof dict.categories]
               : dict.news.sectionTitle}
           </h2>
           <p className="text-muted text-base">{dict.news.sectionSubtitle}</p>

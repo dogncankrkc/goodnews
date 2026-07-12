@@ -16,7 +16,7 @@ export default function NewsGrid({
     return (
       <div className="text-center py-20">
         <div className="text-6xl mb-6">🌤️</div>
-        <p className="text-lg text-muted max-w-md mx-auto">{dict.news.noNews}</p>
+        <p className="text-lg text-muted dark:text-gray-300 max-w-md mx-auto">{dict.news.noNews}</p>
       </div>
     );
   }
