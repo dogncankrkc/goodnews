@@ -55,12 +55,12 @@ export default function Hero({ dict }: { dict: Dictionary }) {
       </div>
 
       {/* Bottom wave (Hidden in dark mode to merge with next section smoothly) */}
-      <div className="absolute bottom-0 left-0 right-0 dark:hidden">
+      <div className="absolute bottom-0 left-0 right-0 wave-container ">
         <svg
           viewBox="0 0 1440 80"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-auto"
+          className="w-full h-auto dark:hidden"
         >
           <path
             d="M0 40C240 80 480 0 720 40C960 80 1200 0 1440 40V80H0V40Z"

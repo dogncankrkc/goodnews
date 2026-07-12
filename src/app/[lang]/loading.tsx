@@ -9,7 +9,7 @@ export default function Loading() {
   return (
     <>
       {/* Hero skeleton — mirrors Hero component structure */}
-      <section className="gradient-hero relative overflow-hidden">
+      <section className="relative overflow-hidden bg-slate-900 gradient-hero">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-float" />
           <div className="absolute top-40 right-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-float-delayed" />
@@ -38,8 +38,8 @@ export default function Loading() {
           </div>
         </div>
 
-        {/* Bottom wave */}
-        <div className="absolute bottom-0 left-0 right-0">
+        {/* Bottom wave (Hidden in dark mode to mirror Hero behavior) */}
+        <div className="absolute bottom-0 left-0 right-0 wave-container">
           <svg
             viewBox="0 0 1440 80"
             fill="none"
@@ -48,7 +48,7 @@ export default function Loading() {
           >
             <path
               d="M0 40C240 80 480 0 720 40C960 80 1200 0 1440 40V80H0V40Z"
-              fill="var(--color-background)"
+              className="fill-white"
             />
           </svg>
         </div>
