@@ -171,7 +171,7 @@ export default async function NewsDetailPage({
       )}
 
       {/* Content */}
-      <div className="prose prose-sm md:prose-base lg:prose-lg max-w-none text-gray-700 dark:prose-invert">
+      <div className="prose prose-sm md:prose-base lg:prose-lg max-w-none text-gray-800 dark:text-gray-200 dark:prose-invert">
         <ReactMarkdown>{news.content}</ReactMarkdown>
       </div>
 
