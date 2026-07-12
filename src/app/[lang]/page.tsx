@@ -26,8 +26,11 @@ export default async function HomePage({
   const dict = await getDictionary(typedLang);
   const allNews = await getNewsByLanguage(typedLang, 30, category);
 
-  const breakingNews = allNews.filter((n) => n.is_breaking);
-  const regularNews = allNews.filter((n) => !n.is_breaking);
+  // Görseli olmayan haberleri client tarafında da sağlama al
+  const allNewsWithImages = allNews.filter((item) => item.image_url);
+
+  const breakingNews = allNewsWithImages.filter((n) => n.is_breaking);
+  const regularNews = allNewsWithImages.filter((n) => !n.is_breaking);
 
   // İlk 5 haberi slider'a, kalanı grid'e ayır
   const sliderNews = regularNews.slice(0, 5);

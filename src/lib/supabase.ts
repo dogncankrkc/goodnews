@@ -106,6 +106,8 @@ export async function getNewsByLanguage(
   let query = supabase
     .from("news")
     .select("*")
+    .not("image_url", "is", null)
+    .neq("image_url", "")
     .order("created_at", { ascending: false })
     .limit(limit);
 
