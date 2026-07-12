@@ -57,13 +57,19 @@ SADECE geçerli JSON ile yanıt ver (markdown yok, kod bloku yok):
 
 Veya sadece şu yanıtı ver: null`;
 
-  const maxRetries = 3;
-  const retryDelayMs = 3000;
+  // ── Model Fallback (Şelale) Mimarisi ─────────────────────
+  const fallbackModels = [
+    "gemini-3.1-flash-lite",
+    "gemini-2.5-flash-lite",
+    "gemini-2.5-flash",
+    "gemini-3-flash",
+    "gemini-3.5-flash",
+  ];
 
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+  for (const model of fallbackModels) {
     try {
       const response = await getClient().models.generateContent({
-        model: "gemini-3.1-flash-lite",
+        model,
         contents: prompt,
       });
 
@@ -103,15 +109,13 @@ Veya sadece şu yanıtı ver: null`;
         image_prompt: parsed.image_prompt || "",
       };
     } catch (error) {
-      if (attempt < maxRetries) {
-        console.warn(`Hata alındı, tekrar deneniyor... (Deneme ${attempt}/${maxRetries})`);
-        await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
-      } else {
-        console.error("Gemini analysis failed after maximum retries:", error);
-        return null;
-      }
+      console.warn(`Model [${model}] başarısız oldu, sıradakine geçiliyor...`, error);
+      // Sonraki modele geçmeden önce 2 saniye bekle (rate-limit koruması)
+      await new Promise((resolve) => setTimeout(resolve, 2000));
     }
   }
 
-  return null;
+  // Tüm modeller tükendi
+  console.error("Gemini analysis failed: all fallback models exhausted.");
+  throw new Error("ALL_MODELS_EXHAUSTED");
 }

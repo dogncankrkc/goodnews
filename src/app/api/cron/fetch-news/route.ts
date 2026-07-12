@@ -4,12 +4,32 @@ import { analyzeAndRewriteNews } from "@/lib/gemini";
 import { fetchAllRSSFeeds } from "@/lib/rss";
 
 /**
+ * Görsel URL'inin gerçekten erişilebilir olup olmadığını kontrol eder.
+ * HEAD isteği ile sadece durum kodunu kontrol eder, görseli indirmez.
+ */
+async function checkImageExists(url: string): Promise<boolean> {
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 saniye zaman aşımı
+
+    // HEAD isteği ile sadece resmin durumunu kontrol ediyoruz, resmi tamamen indirmiyoruz
+    const res = await fetch(url, { method: "HEAD", signal: controller.signal });
+    clearTimeout(timeoutId);
+
+    // Status 200 (OK) ise ve content-type image/ ile başlıyorsa resim gerçekten var demektir
+    return res.ok && (res.headers.get("content-type")?.startsWith("image/") || false);
+  } catch {
+    return false; // İstek zaman aşımına uğrarsa veya hata verirse ölü link say
+  }
+}
+
+/**
  * Cron job endpoint for news fetching and processing.
  * Triggered by Vercel Cron every 6 hours.
  *
  * Flow:
  * 1. Fetch RSS feeds from all sources (TR + EN)
- * 2. Filter: skip items without image or older than 24h
+ * 2. Filter: skip items without image, dead image links, or older than 24h
  * 3. Send each article to Gemini Flash for analysis
  * 4. Gemini filters negative news, rewrites positive ones in BOTH languages
  * 5. Save single row per article with tr_* and en_* fields to Supabase
@@ -38,16 +58,28 @@ export async function GET(request: Request) {
     filtered: 0,
     errors: 0,
     skipped_no_image: 0,
+    skipped_dead_image: 0,
     skipped_old: 0,
   };
 
   try {
     const rssItems = await fetchAllRSSFeeds();
 
+    // ── Fisher-Yates Shuffle: Haber çeşitliliği için karıştır ──
+    const shuffled = [...rssItems];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    // ── Vercel timeout koruması: en fazla 20 haber işle ────────
+    const MAX_ITEMS = 20;
+    const itemsToProcess = shuffled.slice(0, MAX_ITEMS);
+
     // 24 saat öncesinin zamanını hesapla
     const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
 
-    for (const item of rssItems) {
+    for (const item of itemsToProcess) {
       results.processed++;
 
       // ── Kural 1: Görseli olmayan haberleri atla ──────────
@@ -65,6 +97,14 @@ export async function GET(request: Request) {
       const pubDateParsed = new Date(item.pubDate);
       if (isNaN(pubDateParsed.getTime()) || pubDateParsed < twentyFourHoursAgo) {
         results.skipped_old++;
+        continue;
+      }
+
+      // ── Kural 3: Görsel URL'inin erişilebilir olduğunu doğrula ─
+      const imageIsValid = await checkImageExists(item.imageUrl);
+      if (!imageIsValid) {
+        console.warn(`Ölü görsel linki atlandı: ${item.imageUrl}`);
+        results.skipped_dead_image++;
         continue;
       }
 
@@ -115,7 +155,11 @@ export async function GET(request: Request) {
         } else {
           results.saved++;
         }
-      } catch (itemError) {
+      } catch (itemError: any) {
+        if (itemError?.message === "ALL_MODELS_EXHAUSTED") {
+          console.error("Kritik Uyarı: Tüm AI modellerinin kotası doldu. Cron işlemi erken sonlandırılıyor.");
+          break;
+        }
         console.error("Error processing item:", itemError);
         results.errors++;
       }

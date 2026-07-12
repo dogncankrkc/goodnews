@@ -84,8 +84,8 @@ export async function fetchAllRSSFeeds(): Promise<RSSItem[]> {
     try {
       const feed = await parser.parseURL(feedUrl);
 
-      for (const item of feed.items.slice(0, 5)) {
-        // Take top 5 per feed
+      for (const item of feed.items.slice(0, 10)) {
+        // Take top 10 per feed (geniş havuz için)
         if (item.title) {
           allItems.push({
             title: item.title,
