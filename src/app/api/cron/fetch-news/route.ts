@@ -73,8 +73,8 @@ export async function GET(request: Request) {
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
 
-    // ── Vercel timeout & hedef odaklı işlem: "10 başarılı kayıt" bekle ──
-    const TARGET_SAVED = 10;
+    // ── Vercel timeout & hedef odaklı işlem: "30 başarılı kayıt" bekle ──
+    const TARGET_SAVED = 30;
     let savedCount = 0;
 
     // 24 saat öncesinin zamanını hesapla

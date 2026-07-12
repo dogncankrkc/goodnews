@@ -37,7 +37,7 @@ export default async function Navbar({ lang }: { lang: Locale }) {
               <Image
                 src={lang === "tr" ? logoFullTr : logoFullEn}
                 alt={lang === "tr" ? "Güzel Haberler Logo" : "Good News Logo"}
-                className="h-25 w-auto object-contain"
+                className={lang === "tr" ? "h-25 w-auto object-contain" : "h-30 w-auto object-contain"}
                 priority
               />
             </div>
