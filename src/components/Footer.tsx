@@ -26,7 +26,6 @@ export default function Footer({ dict }: { dict: Dictionary }) {
           </p>
 
           <p className="text-xs text-muted flex items-center gap-1">
-            {dict.footer.madeWith}{" "}
             <span className="text-red-400 animate-pulse-soft">♥</span>
           </p>
         </div>

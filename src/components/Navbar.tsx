@@ -25,7 +25,7 @@ export default async function Navbar({ lang }: { lang: Locale }) {
               <img
                 src={logoIcon.src}
                 alt={lang === 'tr' ? 'Güzel Haberler İkonu' : 'Good News Icon'}
-                className="w-auto h-20 object-contain"
+                className="w-auto h-15 object-contain"
               />
             </div>
 
@@ -34,13 +34,15 @@ export default async function Navbar({ lang }: { lang: Locale }) {
               <img
                 src={logoIcon.src}
                 alt={lang === 'tr' ? 'Güzel Haberler Logo' : 'Good News Logo'}
-                className="h-30 w-auto object-contain"
+                className="h-25 w-auto object-contain"
               />
             </div>
           </Link>
 
           {/* Navigation Links / Categories */}
-          <div className="flex items-center gap-6">
+          {/* Language Switcher */}
+          <div className="flex items-center gap-3">
+
             <CategoryDropdown
               lang={lang}
               label={dict.nav.categories}
@@ -62,10 +64,6 @@ export default async function Navbar({ lang }: { lang: Locale }) {
                 label: dict.categories[cat as keyof typeof dict.categories],
               }))}
             />
-          </div>
-
-          {/* Language Switcher */}
-          <div className="flex items-center gap-3">
             <Link
               href={`/${otherLang}`}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full bg-surface text-muted hover:bg-primary hover:text-white transition-all duration-300"

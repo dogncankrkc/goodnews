@@ -23,19 +23,32 @@ export interface RSSItem {
 }
 
 /**
- * RSS feed sources — a curated mix of sources.
+ * RSS feed sources — a curated mix of TR and EN sources.
  * Gemini will produce both TR and EN output from any source language,
  * so we no longer need to split by language.
+ *
+ * Sources are organized: Good-news focused → TR mainstream → EN global
  */
 export const RSS_FEEDS: string[] = [
+  // ── Good-news focused feeds ──────────────────────────────
   "https://www.goodnewsnetwork.org/feed/",
   "https://www.positive.news/feed/",
   "https://www.optimistdaily.com/feed/",
   "https://www.reddit.com/r/UpliftingNews/.rss",
   "https://www.sunnyskyz.com/rss.php",
-  "https://www.trt.net.tr/rss/bilim-teknoloji.rss",
-  "https://www.trt.net.tr/rss/kultur-sanat.rss",
-  "https://www.ntv.com.tr/teknoloji.rss"
+
+  // ── Türkiye kaynakları ───────────────────────────────────
+  "https://www.ntv.com.tr/gundem.rss",
+  "https://www.ntv.com.tr/dunya.rss",
+  "https://www.ntv.com.tr/teknoloji.rss",
+  "https://www.haberturk.com/rss/gundem.xml",
+  "https://www.cnnturk.com/feed/rss/turkiye/news",
+  "https://www.sozcu.com.tr/rss/gundem.xml",
+
+  // ── Global / EN sources ──────────────────────────────────
+  "https://feeds.bbci.co.uk/news/world/rss.xml",
+  "http://rss.cnn.com/rss/edition.rss",
+  "https://www.theguardian.com/world/rss",
 ];
 
 /**

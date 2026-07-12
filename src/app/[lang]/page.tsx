@@ -3,6 +3,7 @@ import { getDictionary, hasLocale } from "@/lib/i18n/dictionaries";
 import type { Locale } from "@/lib/i18n/dictionaries";
 import { getNewsByLanguage } from "@/lib/supabase";
 import Hero from "@/components/Hero";
+import NewsSlider from "@/components/NewsSlider";
 import NewsGrid from "@/components/NewsGrid";
 import Link from "next/link";
 
@@ -28,9 +29,18 @@ export default async function HomePage({
   const breakingNews = allNews.filter((n) => n.is_breaking);
   const regularNews = allNews.filter((n) => !n.is_breaking);
 
+  // İlk 5 haberi slider'a, kalanı grid'e ayır
+  const sliderNews = regularNews.slice(0, 5);
+  const gridNews = regularNews.slice(5);
+
   return (
     <>
       <Hero dict={dict} />
+
+      {/* News Slider — en güncel 5 haber */}
+      {sliderNews.length > 0 && !category && (
+        <NewsSlider news={sliderNews} lang={typedLang} dict={dict} />
+      )}
 
       {/* Breaking News Banner (Son Güzellikler) */}
       {breakingNews.length > 0 && !category && (
@@ -79,7 +89,7 @@ export default async function HomePage({
           <div className="mt-4 mx-auto w-16 h-1 rounded-full bg-gradient-to-r from-primary to-accent" />
         </div>
 
-        <NewsGrid news={regularNews} dict={dict} lang={typedLang} />
+        <NewsGrid news={category ? regularNews : gridNews} dict={dict} lang={typedLang} />
       </section>
     </>
   );

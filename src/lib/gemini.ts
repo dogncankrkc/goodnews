@@ -29,14 +29,14 @@ export async function analyzeAndRewriteNews(
   originalTitle: string,
   originalContent: string
 ): Promise<AnalyzedNews | null> {
-  const prompt = `Sen profesyonel bir haber editörüsün. Aşağıdaki haberi analiz et.
+  const prompt = `Sen profesyonel, deneyimli ve ödüllü bir haber editörüsün. Aşağıdaki haberi analiz et.
 
 KURALLAR:
 1. Eğer haber negatif, trajik, şiddet içeren veya ağırlıklı olarak felaket, suç veya acı ile ilgiliyse, sadece şu yanıtı ver: null
-2. Eğer haber pozitif, umut verici, ilham verici veya ilerleme ve güzel gelişmeler hakkındaysa, bu haberi sanki deneyimli bir haber editörüymüşsün gibi doğal ve umut verici bir dille yeniden yaz.
-3. Hem Türkçe hem de İngilizce versiyonunu oluştur.
-4. İçeriği olgusal tut ancak pozitif yönleri vurgula.
-5. Her dil için çekici bir başlık ve tam bir makale (3-5 paragraf) oluştur.
+2. Eğer haber pozitif, umut verici, ilham verici veya ilerleme ve güzel gelişmeler hakkındaysa, bu haberi sadece çevirmekle kalma — haberi genişlet, zenginleştir ve derinleştir. Haberin arka planını, insanlığa, doğaya veya geleceğe olan pozitif etkilerini detaylandırarak anlat. Kesinlikle en az 4-5 paragraflık, doyurucu ve edebi bir dille yazılmış uzun bir makale (minimum 300 kelime) üret.
+3. Hem Türkçe hem de İngilizce versiyonunu oluştur. Her iki dilde de aynı derinlikte ve zenginlikte yaz.
+4. İçeriği olgusal tut ancak pozitif yönleri vurgula. Konunun neden önemli olduğunu, hangi sorunlara çözüm getirdiğini veya topluma nasıl ilham verdiğini açıkla.
+5. Her dil için çekici, ilgi çekici ve SEO dostu bir başlık oluştur. Makale içeriğinde alt başlıklar kullanarak okunabilirliği artır.
 6. Haberin içeriğini analiz ettikten sonra, kategorisini belirlerken SADECE şu anahtarlardan birini seçmek zorundasın: [general, technology, digital_security, science, health, nature, humanity, education, sports_action, culture_arts, good_business]. Asla kendi inisiyatifinle yeni bir kategori ismi üretme.
 7. Eğer çok büyük, dünyayı veya kitleleri etkileyecek çapta önemli bir pozitif gelişmeyse is_breaking değerini true, sıradan tatlı bir haberse false yap.
 8. Habere uygun, telif hakkı ihlali yaratmayacak, fotogerçekçi bir görsel oluşturmak için İngilizce bir image_prompt üret.
@@ -47,9 +47,9 @@ ORIJINAL İÇERİK: ${originalContent}
 SADECE geçerli JSON ile yanıt ver (markdown yok, kod bloku yok):
 {
   "tr_title": "Türkçe başlık",
-  "tr_content": "Türkçe tam makale içeriği",
+  "tr_content": "Türkçe tam makale içeriği (minimum 300 kelime, 4-5 paragraf)",
   "en_title": "English title",
-  "en_content": "English full article content",
+  "en_content": "English full article content (minimum 300 words, 4-5 paragraphs)",
   "category": "kategori_adı",
   "is_breaking": boolean,
   "image_prompt": "English prompt for image generation"
