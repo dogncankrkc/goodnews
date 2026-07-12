@@ -4,6 +4,7 @@ import Image from "next/image";
 import { getDictionary, hasLocale } from "@/lib/i18n/dictionaries";
 import type { Locale } from "@/lib/i18n/dictionaries";
 import { getNewsById } from "@/lib/supabase";
+import ReactMarkdown from "react-markdown";
 
 function formatDate(dateStr: string, lang: Locale): string {
   const date = new Date(dateStr);
@@ -60,8 +61,8 @@ export default async function NewsDetailPage({
     typedLang === "tr"
       ? news.author
       : news.author === "Haber Merkezi"
-      ? "Editorial Desk"
-      : news.author;
+        ? "Editorial Desk"
+        : news.author;
 
   return (
     <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
@@ -170,14 +171,8 @@ export default async function NewsDetailPage({
       )}
 
       {/* Content */}
-      <div className="prose prose-lg max-w-none text-foreground leading-relaxed">
-        {news.content.split("\n").map((paragraph, i) =>
-          paragraph.trim() ? (
-            <p key={i} className="mb-4 text-base leading-7 text-foreground/90">
-              {paragraph}
-            </p>
-          ) : null
-        )}
+      <div className="prose prose-sm md:prose-base lg:prose-lg max-w-none text-gray-700 dark:prose-invert">
+        <ReactMarkdown>{news.content}</ReactMarkdown>
       </div>
 
       {/* Source link */}
@@ -199,10 +194,10 @@ export default async function NewsDetailPage({
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m9.86-4.122a4.5 4.5 0 0 0-1.242-7.244l-4.5-4.5a4.5 4.5 0 0 0-6.364 6.364L4.757 8.93"
+                d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
               />
             </svg>
-            {typedLang === "tr" ? "Kaynak" : "Source"}
+            {typedLang === "tr" ? "Kaynağa Git" : "Go to Source"}
           </a>
         </div>
       )}
