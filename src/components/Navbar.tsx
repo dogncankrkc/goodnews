@@ -15,7 +15,7 @@ export default async function Navbar({ lang }: { lang: Locale }) {
   return (
     <nav className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-border">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-30">
+        <div className="flex items-center justify-between md:h-30 h-20">
           {/* Logo */}
           <Link
             href={`/${lang}`}
