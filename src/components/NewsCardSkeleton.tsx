@@ -1,40 +1,40 @@
 export default function NewsCardSkeleton() {
   return (
-    <article className="bg-card rounded-2xl border border-border overflow-hidden">
+    <article className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 overflow-hidden">
       {/* Image skeleton */}
-      <div className="relative h-48 overflow-hidden bg-surface animate-pulse">
+      <div className="relative h-48 overflow-hidden bg-gray-200 dark:bg-slate-700 animate-pulse">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-warm/5" />
       </div>
 
       {/* Content skeleton */}
       <div className="p-5 space-y-4">
         {/* Category badge skeleton */}
-        <div className="w-20 h-5 rounded-full bg-surface animate-pulse" />
+        <div className="w-20 h-5 rounded-full bg-gray-200 dark:bg-slate-700 animate-pulse" />
 
         {/* Title skeleton — two lines */}
         <div className="space-y-2">
-          <div className="h-5 w-full rounded-lg bg-surface animate-pulse" />
-          <div className="h-5 w-3/4 rounded-lg bg-surface animate-pulse" />
+          <div className="h-5 w-full rounded-lg bg-gray-200 dark:bg-slate-700 animate-pulse" />
+          <div className="h-5 w-3/4 rounded-lg bg-gray-200 dark:bg-slate-700 animate-pulse" />
         </div>
 
         {/* Content skeleton — three lines */}
         <div className="space-y-2">
-          <div className="h-3.5 w-full rounded-md bg-surface animate-pulse" />
-          <div className="h-3.5 w-full rounded-md bg-surface animate-pulse" />
-          <div className="h-3.5 w-2/3 rounded-md bg-surface animate-pulse" />
+          <div className="h-3.5 w-full rounded-md bg-gray-200 dark:bg-slate-700 animate-pulse" />
+          <div className="h-3.5 w-full rounded-md bg-gray-200 dark:bg-slate-700 animate-pulse" />
+          <div className="h-3.5 w-2/3 rounded-md bg-gray-200 dark:bg-slate-700 animate-pulse" />
         </div>
 
         {/* Meta info skeleton */}
         <div className="flex items-center justify-between pt-1">
           <div className="flex items-center gap-1.5">
-            <div className="w-3.5 h-3.5 rounded-full bg-surface animate-pulse" />
-            <div className="w-24 h-3 rounded bg-surface animate-pulse" />
+            <div className="w-3.5 h-3.5 rounded-full bg-gray-200 dark:bg-slate-700 animate-pulse" />
+            <div className="w-24 h-3 rounded bg-gray-200 dark:bg-slate-700 animate-pulse" />
           </div>
-          <div className="w-16 h-3 rounded bg-surface animate-pulse" />
+          <div className="w-16 h-3 rounded bg-gray-200 dark:bg-slate-700 animate-pulse" />
         </div>
 
         {/* Read more skeleton */}
-        <div className="w-28 h-4 rounded bg-surface animate-pulse mt-2" />
+        <div className="w-28 h-4 rounded bg-gray-200 dark:bg-slate-700 animate-pulse mt-2" />
       </div>
     </article>
   );
@@ -64,11 +64,11 @@ export function NewsSliderSkeleton() {
   return (
     <section className="relative w-full overflow-hidden bg-foreground/5">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-4">
-        <div className="w-48 h-7 rounded-lg bg-surface animate-pulse" />
+        <div className="w-48 h-7 rounded-lg bg-gray-200 dark:bg-slate-700 animate-pulse" />
       </div>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
         <div
-          className="relative rounded-3xl overflow-hidden bg-surface animate-pulse"
+          className="relative rounded-3xl overflow-hidden bg-gray-200 dark:bg-slate-700 animate-pulse"
           style={{ aspectRatio: "16/7" }}
         >
           {/* Gradient shimmer */}

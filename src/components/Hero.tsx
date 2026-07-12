@@ -2,7 +2,7 @@ import type { Dictionary } from "@/lib/i18n/dictionaries";
 
 export default function Hero({ dict }: { dict: Dictionary }) {
   return (
-    <section className="gradient-hero dark:!bg-none dark:bg-slate-900 relative overflow-hidden" id="hero">
+    <section className="relative overflow-hidden bg-slate-900 gradient-hero" id="hero">
       {/* Decorative floating shapes */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-float" />
@@ -54,8 +54,8 @@ export default function Hero({ dict }: { dict: Dictionary }) {
         </div>
       </div>
 
-      {/* Bottom wave */}
-      <div className="absolute bottom-0 left-0 right-0">
+      {/* Bottom wave (Hidden in dark mode to merge with next section smoothly) */}
+      <div className="absolute bottom-0 left-0 right-0 dark:hidden">
         <svg
           viewBox="0 0 1440 80"
           fill="none"
@@ -64,7 +64,7 @@ export default function Hero({ dict }: { dict: Dictionary }) {
         >
           <path
             d="M0 40C240 80 480 0 720 40C960 80 1200 0 1440 40V80H0V40Z"
-            className="fill-white dark:fill-slate-900 transition-colors duration-300"
+            className="fill-white"
           />
         </svg>
       </div>

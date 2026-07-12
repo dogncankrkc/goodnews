@@ -83,12 +83,12 @@ export default async function HomePage({
       >
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground dark:text-slate-100 mb-3">
             {category
               ? dict.categories[category as keyof typeof dict.categories]
               : dict.news.sectionTitle}
           </h2>
-          <p className="text-muted text-base">{dict.news.sectionSubtitle}</p>
+          <p className="text-muted dark:text-slate-400 text-base">{dict.news.sectionSubtitle}</p>
           <div className="mt-4 mx-auto w-16 h-1 rounded-full bg-gradient-to-r from-primary to-accent" />
         </div>
 
