@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import CategoryDropdown from "./CategoryDropdown";
 import logoIcon from "../../public/logo-icon-latest.png";
+import logoFullEn from "../../public/logo-full.png";
+import logoFullTr from "../../public/logo-full-tr.png";
 
 export default async function Navbar({ lang }: { lang: Locale }) {
   const dict = await getDictionary(lang);
@@ -21,20 +23,22 @@ export default async function Navbar({ lang }: { lang: Locale }) {
             id="nav-logo"
           >
             {/* Mobile Logo (Icon only) */}
-            <div className="md:hidden flex items-center">
-              <img
-                src={logoIcon.src}
-                alt={lang === 'tr' ? 'Güzel Haberler İkonu' : 'Good News Icon'}
+            <div className="flex md:hidden items-center">
+              <Image
+                src={logoIcon}
+                alt={lang === "tr" ? "Güzel Haberler İkonu" : "Good News Icon"}
                 className="w-auto h-15 object-contain"
+                priority
               />
             </div>
 
             {/* Desktop Logo (Full text) */}
             <div className="hidden md:flex items-center">
-              <img
-                src={logoIcon.src}
-                alt={lang === 'tr' ? 'Güzel Haberler Logo' : 'Good News Logo'}
+              <Image
+                src={lang === "tr" ? logoFullTr : logoFullEn}
+                alt={lang === "tr" ? "Güzel Haberler Logo" : "Good News Logo"}
                 className="h-25 w-auto object-contain"
+                priority
               />
             </div>
           </Link>
