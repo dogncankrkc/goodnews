@@ -35,16 +35,29 @@ export async function generateMetadata({
   const dict = await getDictionary(lang);
 
   return {
+    metadataBase: new URL("https://goodnews-seven.vercel.app"),
     title: dict.metadata.title,
     description: dict.metadata.description,
     openGraph: {
       title: dict.metadata.title,
       description: dict.metadata.description,
+      url: "https://goodnews-seven.vercel.app",
+      siteName: dict.metadata.title,
+      images: [
+        {
+          url: "/logo-icon-latest.png",
+          width: 1200,
+          height: 630,
+          alt: dict.metadata.title,
+        },
+      ],
       type: "website",
     },
-    icons: {
-      icon: "/logo-icon-latest.png",
-      apple: "/logo-icon-latest.png",
+    twitter: {
+      card: "summary_large_image",
+      title: dict.metadata.title,
+      description: dict.metadata.description,
+      images: ["/logo-icon-latest.png"],
     },
   };
 }
