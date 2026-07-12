@@ -60,6 +60,7 @@ export async function GET(request: Request) {
     skipped_no_image: 0,
     skipped_dead_image: 0,
     skipped_old: 0,
+    skipped_duplicate: 0,
   };
 
   try {
@@ -72,14 +73,19 @@ export async function GET(request: Request) {
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
 
-    // ── Vercel timeout koruması: en fazla 20 haber işle ────────
-    const MAX_ITEMS = 20;
-    const itemsToProcess = shuffled.slice(0, MAX_ITEMS);
+    // ── Vercel timeout & hedef odaklı işlem: "10 başarılı kayıt" bekle ──
+    const TARGET_SAVED = 10;
+    let savedCount = 0;
 
     // 24 saat öncesinin zamanını hesapla
     const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
 
-    for (const item of itemsToProcess) {
+    for (const item of shuffled) {
+      if (savedCount >= TARGET_SAVED) {
+        console.log(`Hedef sayıya (${TARGET_SAVED}) ulaşıldı, tarama sonlandırılıyor.`);
+        break;
+      }
+
       results.processed++;
 
       // ── Kural 1: Görseli olmayan haberleri atla ──────────
@@ -118,6 +124,7 @@ export async function GET(request: Request) {
             .single();
 
           if (existing) {
+            results.skipped_duplicate++;
             continue; // Skip duplicate
           }
         }
@@ -154,6 +161,7 @@ export async function GET(request: Request) {
           results.errors++;
         } else {
           results.saved++;
+          savedCount++; // Başarılı kayıt sayacını artır
         }
       } catch (itemError: any) {
         if (itemError?.message === "ALL_MODELS_EXHAUSTED") {

@@ -118,7 +118,7 @@ export default function NewsSlider({ news, lang, dict }: NewsSliderProps) {
 
       {/* Main slider area */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
-        <div className="relative rounded-3xl overflow-hidden shadow-xl" style={{ aspectRatio: "16/7" }}>
+        <div className="relative rounded-3xl overflow-hidden shadow-xl h-[450px] md:h-auto md:aspect-[16/7]">
           {/* Background image */}
           <div className={`absolute inset-0 ${animationClass}`}>
             {currentNews.image_url ? (
@@ -139,10 +139,10 @@ export default function NewsSlider({ news, lang, dict }: NewsSliderProps) {
           <div className="absolute inset-0 slider-gradient" />
 
           {/* Content */}
-          <div className={`absolute inset-0 flex flex-col justify-end p-6 sm:p-8 lg:p-10 ${animationClass}`}>
+          <div className={`absolute inset-0 flex flex-col justify-end p-5 sm:p-8 lg:p-10 ${animationClass}`}>
             {/* Category badge */}
             <span
-              className={`self-start px-3 py-1 rounded-full text-xs font-semibold mb-3 backdrop-blur-sm ${getCategoryBadgeClass(
+              className={`self-start px-2.5 py-1 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-semibold mb-2.5 md:mb-3 backdrop-blur-sm ${getCategoryBadgeClass(
                 currentNews.category
               )}`}
             >
@@ -150,21 +150,21 @@ export default function NewsSlider({ news, lang, dict }: NewsSliderProps) {
             </span>
 
             {/* Title */}
-            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white leading-snug mb-2 line-clamp-2 drop-shadow-md">
+            <h3 className="text-lg md:text-2xl lg:text-3xl font-bold text-white leading-snug mb-1.5 md:mb-2 line-clamp-2 drop-shadow-md">
               <Link href={`/${lang}/news/${currentNews.id}`} className="hover:underline decoration-2 underline-offset-4">
                 {currentNews.title}
               </Link>
             </h3>
 
             {/* Excerpt */}
-            <p className="text-sm sm:text-base text-white/80 leading-relaxed line-clamp-2 max-w-2xl mb-4 drop-shadow-sm">
+            <p className="text-sm md:text-base text-white/90 leading-relaxed line-clamp-3 md:line-clamp-2 max-w-2xl mb-3 md:mb-4 drop-shadow-sm">
               {currentNews.content.substring(0, 180)}...
             </p>
 
             {/* Read more */}
             <Link
               href={`/${lang}/news/${currentNews.id}`}
-              className="inline-flex items-center gap-2 self-start px-5 py-2.5 bg-white/15 backdrop-blur-md text-white text-sm font-semibold rounded-xl border border-white/20 hover:bg-white/25 transition-all duration-300 group"
+              className="inline-flex items-center gap-1.5 md:gap-2 self-start px-4 py-2 md:px-5 md:py-2.5 bg-white/15 backdrop-blur-md text-white text-xs md:text-sm font-semibold rounded-xl border border-white/20 hover:bg-white/25 transition-all duration-300 group"
             >
               {dict.news.readMore}
               <svg
