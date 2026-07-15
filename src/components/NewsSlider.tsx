@@ -118,7 +118,7 @@ export default function NewsSlider({ news, lang, dict }: NewsSliderProps) {
 
       {/* Main slider area */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
-        <div className="relative rounded-3xl overflow-hidden shadow-xl h-[450px] md:h-auto md:aspect-[16/7]">
+        <div className="relative rounded-3xl overflow-hidden shadow-xl h-[450px] md:h-auto md:aspect-[16/7] group">
           {/* Background image */}
           <div className={`absolute inset-0 ${animationClass}`}>
             {currentNews.image_url ? (
@@ -126,23 +126,26 @@ export default function NewsSlider({ news, lang, dict }: NewsSliderProps) {
                 src={currentNews.image_url}
                 alt={currentNews.title}
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 1152px"
                 priority
               />
             ) : (
-              <div className="w-full h-full bg-gradient-to-br from-primary/20 via-accent/20 to-warm/20" />
+              <div className="w-full h-full bg-gradient-to-br from-primary/20 via-accent/20 to-warm/20 transition-transform duration-700 group-hover:scale-105" />
             )}
           </div>
 
           {/* Gradient overlay */}
-          <div className="absolute inset-0 slider-gradient" />
+          <div className="absolute inset-0 slider-gradient pointer-events-none" />
+
+          {/* Invisible Link covering the whole slide */}
+          <Link href={`/${lang}/news/${currentNews.id}`} className="absolute inset-0 z-10 cursor-pointer" aria-label={`Read more about ${currentNews.title}`} />
 
           {/* Content */}
-          <div className={`absolute inset-0 flex flex-col justify-end p-5 sm:p-8 lg:p-10 ${animationClass}`}>
+          <div className={`absolute inset-0 flex flex-col justify-end p-5 sm:p-8 lg:p-10 pointer-events-none z-20 ${animationClass}`}>
             {/* Category badge */}
             <span
-              className={`self-start px-2.5 py-1 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-semibold mb-2.5 md:mb-3 backdrop-blur-sm bg-white/90 dark:bg-slate-900/80 ${getCategoryBadgeClass(
+              className={`self-start px-2.5 py-1 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-semibold mb-2.5 md:mb-3 backdrop-blur-sm bg-white/90 dark:bg-slate-900/80 pointer-events-auto ${getCategoryBadgeClass(
                 currentNews.category
               )}`}
             >
@@ -150,7 +153,7 @@ export default function NewsSlider({ news, lang, dict }: NewsSliderProps) {
             </span>
 
             {/* Title */}
-            <h3 className="text-lg md:text-2xl lg:text-3xl font-bold text-white leading-snug mb-1.5 md:mb-2 line-clamp-2 drop-shadow-md">
+            <h3 className="text-lg md:text-2xl lg:text-3xl font-bold text-white leading-snug mb-1.5 md:mb-2 line-clamp-2 drop-shadow-md pointer-events-auto">
               <Link href={`/${lang}/news/${currentNews.id}`} className="hover:underline decoration-2 underline-offset-4">
                 {currentNews.title}
               </Link>
@@ -164,11 +167,11 @@ export default function NewsSlider({ news, lang, dict }: NewsSliderProps) {
             {/* Read more */}
             <Link
               href={`/${lang}/news/${currentNews.id}`}
-              className="inline-flex items-center gap-1.5 md:gap-2 self-start px-4 py-2 md:px-5 md:py-2.5 bg-white/15 backdrop-blur-md text-white text-xs md:text-sm font-semibold rounded-xl border border-white/20 hover:bg-white/25 transition-all duration-300 group"
+              className="inline-flex items-center gap-1.5 md:gap-2 self-start px-4 py-2 md:px-5 md:py-2.5 bg-white/15 backdrop-blur-md text-white text-xs md:text-sm font-semibold rounded-xl border border-white/20 hover:bg-white/25 transition-all duration-300 group/btn pointer-events-auto"
             >
               {dict.news.readMore}
               <svg
-                className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+                className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-1"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={2}
@@ -190,7 +193,7 @@ export default function NewsSlider({ news, lang, dict }: NewsSliderProps) {
                 onClick={goPrev}
                 disabled={isAnimating}
                 aria-label={dict.news.previous}
-                className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 backdrop-blur-sm border border-white/10 text-white flex items-center justify-center hover:bg-black/50 transition-all duration-200 disabled:opacity-30 cursor-pointer"
+                className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 backdrop-blur-sm border border-white/10 text-white flex items-center justify-center hover:bg-black/50 transition-all duration-200 disabled:opacity-30 cursor-pointer z-30"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -200,7 +203,7 @@ export default function NewsSlider({ news, lang, dict }: NewsSliderProps) {
                 onClick={goNext}
                 disabled={isAnimating}
                 aria-label={dict.news.next}
-                className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 backdrop-blur-sm border border-white/10 text-white flex items-center justify-center hover:bg-black/50 transition-all duration-200 disabled:opacity-30 cursor-pointer"
+                className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/30 backdrop-blur-sm border border-white/10 text-white flex items-center justify-center hover:bg-black/50 transition-all duration-200 disabled:opacity-30 cursor-pointer z-30"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
@@ -211,7 +214,7 @@ export default function NewsSlider({ news, lang, dict }: NewsSliderProps) {
 
           {/* Dot indicators */}
           {news.length > 1 && (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-30">
               {news.map((_, index) => (
                 <button
                   key={index}

@@ -49,17 +49,17 @@ export default function NewsCard({
       id={`news-card-${news.id}`}
     >
       {/* Image placeholder with gradient */}
-      <div className="relative h-48 overflow-hidden">
+      <Link href={`/${lang}/news/${news.id}`} className="relative block h-48 overflow-hidden cursor-pointer group">
         {news.image_url ? (
           <Image
             src={news.image_url}
             alt={news.title}
             fill
-            className="object-cover"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-primary/10 via-accent/10 to-warm/10 flex items-center justify-center">
+          <div className="w-full h-full bg-gradient-to-br from-primary/10 via-accent/10 to-warm/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
             <span className="text-5xl opacity-30 select-none">
               {news.category === "technology"
                 ? "💡"
@@ -81,13 +81,13 @@ export default function NewsCard({
         )}
         {/* Category badge */}
         <span
-          className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold bg-white/90 dark:bg-slate-900/80 backdrop-blur-sm ${getCategoryBadgeClass(
+          className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold bg-white/90 dark:bg-slate-900/80 backdrop-blur-sm z-10 ${getCategoryBadgeClass(
             news.category
           )}`}
         >
           {categoryLabel}
         </span>
-      </div>
+      </Link>
 
       {/* Content */}
       <div className="p-5">
