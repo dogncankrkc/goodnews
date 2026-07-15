@@ -24,10 +24,6 @@ export default function Footer({ dict }: { dict: Dictionary }) {
           <p className="text-xs text-gray-600 dark:text-gray-400">
             © {year} {dict.nav.brand}. {dict.footer.rights}
           </p>
-
-          <p className="text-xs text-gray-600 dark:text-gray-400 flex items-center gap-1">
-            <span className="text-red-400 animate-pulse-soft">♥</span>
-          </p>
         </div>
       </div>
     </footer>

@@ -49,5 +49,25 @@
     "tagline": "Özenle seçilmiş, umut dolu haberler.",
     "rights": "Tüm hakları saklıdır.",
     "madeWith": "ile yapıldı"
+  },
+  "streak": {
+    "milestone3": "Harika gidiyorsun! Bugün 3 pozitif haber okudun.",
+    "milestone5": "Bugün 5 pozitif haber okudun, ruh sağlığına +10 puan! 🌟",
+    "milestone10": "Sen bir iyilik elçisisin! 10 güzel haberle gününü aydınlattın."
+  },
+  "report": {
+    "button": "Hatalı İçerik Bildir",
+    "reported": "Bildirildi"
+  },
+  "grid": {
+    "loadMore": "Daha Fazla Haber Yükle",
+    "loading": "Yükleniyor..."
+  },
+  "reactions": {
+    "title": "Bu habere tepkiniz nedir?",
+    "inspiring": "İlham Verici",
+    "innovative": "Yenilikçi",
+    "heartwarming": "İç Isıtan",
+    "promising": "Gelecek Vaat Eden"
   }
 }

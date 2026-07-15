@@ -14,9 +14,14 @@ CREATE TABLE IF NOT EXISTS news (
   image_url TEXT,
   source_url TEXT,
   category TEXT DEFAULT 'general',
+  audience_type TEXT DEFAULT 'UNIVERSAL',
   author TEXT DEFAULT 'Haber Merkezi',
   is_breaking BOOLEAN DEFAULT false,
-  created_at TIMESTAMPTZ DEFAULT now()
+  created_at TIMESTAMPTZ DEFAULT now(),
+  reaction_inspiring INT DEFAULT 0,
+  reaction_innovative INT DEFAULT 0,
+  reaction_heartwarming INT DEFAULT 0,
+  reaction_promising INT DEFAULT 0
 );
 
 -- Indexes for efficient querying
@@ -37,3 +42,36 @@ CREATE POLICY "Allow service role full access" ON news
   FOR ALL
   USING (auth.role() = 'service_role')
   WITH CHECK (auth.role() = 'service_role');
+
+-- Drop old functions
+DROP FUNCTION IF EXISTS increment_reaction(INT, TEXT);
+DROP FUNCTION IF EXISTS increment_reaction(UUID, TEXT);
+DROP FUNCTION IF EXISTS increment_reaction;
+
+-- RPC Function for Handling Reactions (Toggle and Swap support)
+CREATE OR REPLACE FUNCTION handle_reaction(p_news_id UUID, p_old_reaction TEXT, p_new_reaction TEXT)
+RETURNS void AS $$
+BEGIN
+  -- Revert old reaction if exists
+  IF p_old_reaction = 'inspiring' THEN
+    UPDATE news SET reaction_inspiring = GREATEST(0, COALESCE(reaction_inspiring, 0) - 1) WHERE id = p_news_id;
+  ELSIF p_old_reaction = 'innovative' THEN
+    UPDATE news SET reaction_innovative = GREATEST(0, COALESCE(reaction_innovative, 0) - 1) WHERE id = p_news_id;
+  ELSIF p_old_reaction = 'heartwarming' THEN
+    UPDATE news SET reaction_heartwarming = GREATEST(0, COALESCE(reaction_heartwarming, 0) - 1) WHERE id = p_news_id;
+  ELSIF p_old_reaction = 'promising' THEN
+    UPDATE news SET reaction_promising = GREATEST(0, COALESCE(reaction_promising, 0) - 1) WHERE id = p_news_id;
+  END IF;
+
+  -- Apply new reaction if exists
+  IF p_new_reaction = 'inspiring' THEN
+    UPDATE news SET reaction_inspiring = COALESCE(reaction_inspiring, 0) + 1 WHERE id = p_news_id;
+  ELSIF p_new_reaction = 'innovative' THEN
+    UPDATE news SET reaction_innovative = COALESCE(reaction_innovative, 0) + 1 WHERE id = p_news_id;
+  ELSIF p_new_reaction = 'heartwarming' THEN
+    UPDATE news SET reaction_heartwarming = COALESCE(reaction_heartwarming, 0) + 1 WHERE id = p_news_id;
+  ELSIF p_new_reaction = 'promising' THEN
+    UPDATE news SET reaction_promising = COALESCE(reaction_promising, 0) + 1 WHERE id = p_news_id;
+  END IF;
+END;
+$$ LANGUAGE plpgsql;

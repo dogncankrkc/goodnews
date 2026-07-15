@@ -12,9 +12,14 @@ export type NewsRow = {
   image_url: string | null;
   source_url: string | null;
   category: string;
+  audience_type: string;
   author: string;
   is_breaking: boolean;
   created_at: string;
+  reaction_inspiring: number;
+  reaction_innovative: number;
+  reaction_heartwarming: number;
+  reaction_promising: number;
 };
 
 /**
@@ -28,9 +33,16 @@ export type NewsItem = {
   image_url: string | null;
   source_url: string | null;
   category: string;
+  audience_type: string;
   author: string;
   is_breaking: boolean;
   created_at: string;
+  reactions: {
+    inspiring: number;
+    innovative: number;
+    heartwarming: number;
+    promising: number;
+  };
 };
 
 /**
@@ -44,9 +56,16 @@ function resolveLocale(row: NewsRow, lang: "tr" | "en"): NewsItem {
     image_url: row.image_url,
     source_url: row.source_url,
     category: row.category,
+    audience_type: row.audience_type || 'UNIVERSAL',
     author: row.author,
     is_breaking: row.is_breaking || false,
     created_at: row.created_at,
+    reactions: {
+      inspiring: row.reaction_inspiring || 0,
+      innovative: row.reaction_innovative || 0,
+      heartwarming: row.reaction_heartwarming || 0,
+      promising: row.reaction_promising || 0,
+    },
   };
 }
 
@@ -90,7 +109,9 @@ export function createPublicClient() {
 export async function getNewsByLanguage(
   language: "tr" | "en",
   limit = 20,
-  category?: string
+  offset = 0,
+  category?: string,
+  region: string = "GLOBAL"
 ): Promise<NewsItem[]> {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -109,10 +130,19 @@ export async function getNewsByLanguage(
     .not("image_url", "is", null)
     .neq("image_url", "")
     .order("created_at", { ascending: false })
-    .limit(limit);
+    .range(offset, offset + limit - 1);
 
   if (category) {
     query = query.eq("category", category);
+  }
+
+  // Filter based on region and audience_type
+  if (region === "GLOBAL") {
+    // Non-TR users only see UNIVERSAL news
+    query = query.eq("audience_type", "UNIVERSAL");
+  } else {
+    // TR users see both UNIVERSAL and TR_LOCAL (no filter needed, or explicitly IN filter if more types added later)
+    query = query.in("audience_type", ["UNIVERSAL", "TR_LOCAL"]);
   }
 
   const { data, error } = await query;

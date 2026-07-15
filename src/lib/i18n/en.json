@@ -49,5 +49,25 @@
     "tagline": "Carefully curated stories full of hope.",
     "rights": "All rights reserved.",
     "madeWith": "Made with"
+  },
+  "streak": {
+    "milestone3": "You're doing great! You've read 3 positive news stories today.",
+    "milestone5": "You've read 5 positive news stories today, +10 points for your mental health! 🌟",
+    "milestone10": "You're an ambassador of goodness! You've brightened your day with 10 beautiful stories."
+  },
+  "report": {
+    "button": "Report Inaccurate Content",
+    "reported": "Reported"
+  },
+  "grid": {
+    "loadMore": "Load More News",
+    "loading": "Loading..."
+  },
+  "reactions": {
+    "title": "What's your reaction to this story?",
+    "inspiring": "Inspiring",
+    "innovative": "Innovative",
+    "heartwarming": "Heartwarming",
+    "promising": "Promising"
   }
 }

@@ -5,6 +5,7 @@ import { getDictionary, hasLocale } from "@/lib/i18n/dictionaries";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -89,6 +90,7 @@ export default async function LangLayout({
           <Navbar lang={lang} />
           <main className="flex-1">{children}</main>
           <Footer dict={dict} />
+          <Toaster position="bottom-center" richColors />
         </ThemeProvider>
       </body>
     </html>

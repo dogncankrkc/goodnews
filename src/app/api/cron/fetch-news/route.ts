@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase";
-import { analyzeAndRewriteNews } from "@/lib/gemini";
+import { analyzeAndRewriteNews, rateNewsPositivity } from "@/lib/gemini";
 import { fetchAllRSSFeeds } from "@/lib/rss";
 
 /**
@@ -61,6 +61,7 @@ export async function GET(request: Request) {
     skipped_dead_image: 0,
     skipped_old: 0,
     skipped_duplicate: 0,
+    skipped_low_score: 0,
   };
 
   try {
@@ -129,6 +130,15 @@ export async function GET(request: Request) {
           }
         }
 
+        // --- Gatekeeper AI (Positivity Check) ---
+        const score = await rateNewsPositivity(item.title, item.content);
+        if (score < 7) {
+          console.log(`Gatekeeper: Haber reddedildi. Puan: ${score} - Başlık: ${item.title}`);
+          results.skipped_low_score++;
+          continue; // Puanı düşük, haberi atla
+        }
+        console.log(`Gatekeeper: Haber onaylandı. Puan: ${score} - Başlık: ${item.title}`);
+
         // Analyze with Gemini — returns both TR and EN in a single call
         const analyzed = await analyzeAndRewriteNews(
           item.title,
@@ -152,6 +162,7 @@ export async function GET(request: Request) {
           image_url: finalImageUrl,
           source_url: item.link || null,
           category: analyzed.category,
+          audience_type: analyzed.audience_type,
           is_breaking: analyzed.is_breaking,
           author: "Haber Merkezi",
         });

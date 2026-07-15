@@ -16,6 +16,8 @@ function DropdownContent({ lang, label, allLabel, categories }: CategoryDropdown
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
   const currentCategory = searchParams.get("category");
+  const activeCategory = categories.find((cat) => cat.id === currentCategory);
+  const displayLabel = currentCategory ? (activeCategory?.label || label) : allLabel;
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -53,7 +55,7 @@ function DropdownContent({ lang, label, allLabel, categories }: CategoryDropdown
           aria-expanded={isOpen}
           aria-haspopup="true"
         >
-          {label}
+          {displayLabel}
           <svg
             className={`w-4 h-4 transition-transform duration-200 ${
               isOpen ? "rotate-180" : ""

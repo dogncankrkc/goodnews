@@ -1,54 +1,45 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const locales = ["tr", "en"];
-const defaultLocale = "tr";
-
-/**
- * Domain-to-locale mapping:
- * - guzelhaberler.com → Turkish (tr)
- * - goodnews.com → English (en)
- * - localhost / everything else → Turkish (tr) as default
- */
-function getLocaleFromDomain(hostname: string): string {
-  // Remove port number for comparison
-  const host = hostname.split(":")[0];
-
-  if (host === "goodnews.com" || host === "www.goodnews.com") {
-    return "en";
-  }
-  if (host === "guzelhaberler.com" || host === "www.guzelhaberler.com") {
-    return "tr";
-  }
-
-  // Default to Turkish for localhost and unknown domains
-  return defaultLocale;
-}
-
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Check if the pathname already has a locale prefix
-  const pathnameHasLocale = locales.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-  );
+  // 1. Vercel üzerinden gelen IP ülkesini al. Localhost için 'TR' varsayılan yap, header yoksa 'GLOBAL' havuzuna at.
+  const countryHeader = request.headers.get("x-vercel-ip-country");
+  const country = process.env.NODE_ENV === "development" ? "TR" : (countryHeader || "GLOBAL");
+  
+  const region = country === "TR" ? "TR" : "GLOBAL";
 
-  if (pathnameHasLocale) {
-    return NextResponse.next();
+  // 2. Kullanıcı zaten /tr veya /en içindeyse yönlendirme yapma, sadece header ve cookie ekle
+  const isTrOrEn = pathname.startsWith("/tr") || pathname.startsWith("/en");
+  
+  if (isTrOrEn) {
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("x-user-region", region);
+
+    const response = NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
+    
+    response.cookies.set("x-user-region", region);
+    return response;
   }
 
-  // Determine locale from domain
-  const hostname = request.headers.get("host") || "localhost";
-  const locale = getLocaleFromDomain(hostname);
-
-  // Redirect to the locale-prefixed path
-  request.nextUrl.pathname = `/${locale}${pathname}`;
-  return NextResponse.redirect(request.nextUrl);
+  // 3. Yönlendirme gerekiyorsa (Kullanıcı kök dizinde veya dil parametresi olmayan bir rotadaysa)
+  const targetLang = country === "TR" ? "tr" : "en";
+  const isRootPath = pathname === "/";
+  const targetPath = isRootPath ? `/${targetLang}` : `/${targetLang}${pathname}`;
+  
+  const response = NextResponse.redirect(new URL(targetPath, request.url));
+  response.cookies.set("x-user-region", region);
+  return response;
 }
 
 export const config = {
+  // Statik dosyaları, Next.js iç dosyalarını, ikonları ve API rotalarını yoksay
   matcher: [
-    // Skip internal paths, API routes, and static assets
-    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|images).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|apple-icon|site\\.webmanifest|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };

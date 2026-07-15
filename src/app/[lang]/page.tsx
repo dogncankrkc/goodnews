@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { headers } from "next/headers";
 import { getDictionary, hasLocale } from "@/lib/i18n/dictionaries";
 import type { Locale } from "@/lib/i18n/dictionaries";
 import { getNewsByLanguage } from "@/lib/supabase";
@@ -24,7 +25,11 @@ export default async function HomePage({
 
   const typedLang = lang as Locale;
   const dict = await getDictionary(typedLang);
-  const allNews = await getNewsByLanguage(typedLang, 30, category);
+  
+  const headersList = await headers();
+  const region = headersList.get("x-user-region") || "GLOBAL";
+  
+  const allNews = await getNewsByLanguage(typedLang, 30, 0, category, region);
 
   // Görseli olmayan haberleri client tarafında da sağlama al
   const allNewsWithImages = allNews.filter((item) => item.image_url);
@@ -92,7 +97,12 @@ export default async function HomePage({
           <div className="mt-4 mx-auto w-16 h-1 rounded-full bg-gradient-to-r from-primary to-accent" />
         </div>
 
-        <NewsGrid news={category ? regularNews : gridNews} dict={dict} lang={typedLang} />
+        <NewsGrid 
+          news={category ? regularNews : gridNews} 
+          dict={dict} 
+          lang={typedLang} 
+          category={category} 
+        />
       </section>
     </>
   );

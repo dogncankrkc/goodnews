@@ -35,7 +35,6 @@ export const RSS_FEEDS: string[] = [
   "https://www.positive.news/feed/",
   "https://www.optimistdaily.com/feed/",
   "https://www.reddit.com/r/UpliftingNews/.rss",
-  "https://www.sunnyskyz.com/rss.php",
 
   // ── Türkiye kaynakları ───────────────────────────────────
   "https://www.ntv.com.tr/gundem.rss",

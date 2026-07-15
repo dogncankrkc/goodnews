@@ -5,6 +5,9 @@ import { getDictionary, hasLocale } from "@/lib/i18n/dictionaries";
 import type { Locale } from "@/lib/i18n/dictionaries";
 import { getNewsById } from "@/lib/supabase";
 import ReactMarkdown from "react-markdown";
+import NewsReactions from "@/components/NewsReactions";
+import ReportButton from "@/components/ReportButton";
+import StreakTracker from "@/components/StreakTracker";
 
 function formatDate(dateStr: string, lang: Locale): string {
   const date = new Date(dateStr);
@@ -66,6 +69,9 @@ export default async function NewsDetailPage({
 
   return (
     <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      {/* İyilik Serisi (Streak) Takipçisi */}
+      <StreakTracker newsId={news.id} dict={dict} />
+      
       {/* Back button */}
       <Link
         href={`/${typedLang}`}
@@ -173,6 +179,16 @@ export default async function NewsDetailPage({
       {/* Content */}
       <div className="prose prose-sm md:prose-base lg:prose-lg max-w-none prose-slate dark:prose-invert dark:prose-headings:text-white">
         <ReactMarkdown>{news.content}</ReactMarkdown>
+      </div>
+
+      {/* Reactions & Report */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+        <div className="flex-1 w-full">
+          <NewsReactions newsId={news.id} initialReactions={news.reactions} dict={dict} />
+        </div>
+        <div className="pb-8 sm:pb-12">
+          <ReportButton newsId={news.id} dict={dict} />
+        </div>
       </div>
 
       {/* Source link */}
