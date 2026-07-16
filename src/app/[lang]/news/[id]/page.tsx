@@ -8,6 +8,8 @@ import ReactMarkdown from "react-markdown";
 import NewsReactions from "@/components/NewsReactions";
 import ReportButton from "@/components/ReportButton";
 import StreakTracker from "@/components/StreakTracker";
+import type { Metadata } from "next";
+import ShareButton from "@/components/ShareButton";
 
 function formatDate(dateStr: string, lang: Locale): string {
   const date = new Date(dateStr);
@@ -35,6 +37,53 @@ function getCategoryBadgeClass(category: string): string {
     general: "text-slate-700 dark:text-slate-300",
   };
   return classes[category] || classes.general;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string; id: string }>;
+}): Promise<Metadata> {
+  const { lang, id } = await params;
+
+  if (!hasLocale(lang)) {
+    return { title: "Not Found" };
+  }
+
+  const typedLang = lang as Locale;
+  const news = await getNewsById(id, typedLang);
+
+  if (!news) {
+    return { title: "Not Found" };
+  }
+
+  const title = news.title;
+  const description = news.content.substring(0, 160).replace(/\n/g, ' ') + '...';
+  const imageUrl = news.image_url || '/logo-icon-latest.png';
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `https://guzelhaberler.net/${lang}/news/${id}`,
+      type: "article",
+      locale: lang === 'tr' ? 'tr_TR' : 'en_US',
+      images: [
+        {
+          url: imageUrl,
+          alt: title,
+        }
+      ]
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl]
+    }
+  };
 }
 
 export default async function NewsDetailPage({
@@ -182,11 +231,16 @@ export default async function NewsDetailPage({
       </div>
 
       {/* Reactions & Report */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-t border-border mt-12">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-t border-border mt-12 ">
         <div className="flex-1 w-full">
           <NewsReactions newsId={news.id} initialReactions={news.reactions} dict={dict} />
         </div>
-        <div className="pb-8 sm:pb-12">
+        <div className="flex items-center gap-3 pb-8">
+          <ShareButton
+            title={news.title}
+            text={news.content.substring(0, 100).replace(/\n/g, ' ') + '...'}
+            dict={dict}
+          />
           <ReportButton newsId={news.id} dict={dict} />
         </div>
       </div>

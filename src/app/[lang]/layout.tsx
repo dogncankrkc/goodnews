@@ -35,30 +35,37 @@ export async function generateMetadata({
   }
 
   const dict = await getDictionary(lang);
+  const siteTitle = lang === 'tr' ? 'Güzel Haberler' : 'Good News';
+  const description = dict.metadata.description;
+  const baseUrl = "https://guzelhaberler.net";
 
   return {
-    metadataBase: new URL("https://goodnews-seven.vercel.app"),
-    title: dict.metadata.title,
-    description: dict.metadata.description,
+    metadataBase: new URL(baseUrl),
+    title: {
+      default: siteTitle,
+      template: `%s | ${siteTitle}`,
+    },
+    description: description,
     openGraph: {
-      title: dict.metadata.title,
-      description: dict.metadata.description,
-      url: "https://goodnews-seven.vercel.app",
-      siteName: dict.metadata.title,
+      title: siteTitle,
+      description: description,
+      url: baseUrl,
+      siteName: siteTitle,
+      locale: lang === 'tr' ? 'tr_TR' : 'en_US',
       images: [
         {
           url: "/logo-icon-latest.png",
           width: 1200,
           height: 630,
-          alt: dict.metadata.title,
+          alt: siteTitle,
         },
       ],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: dict.metadata.title,
-      description: dict.metadata.description,
+      title: siteTitle,
+      description: description,
       images: ["/logo-icon-latest.png"],
     },
   };
