@@ -79,7 +79,7 @@ export async function analyzeAndRewriteNews(
   const prompt = `Sen profesyonel, deneyimli ve ödüllü bir haber editörüsün. Aşağıdaki haberi analiz et.
 
 KURALLAR:
-1. Eğer haber negatif, trajik, şiddet içeren veya ağırlıklı olarak felaket, suç veya acı ile ilgiliyse, sadece şu yanıtı ver: null
+1. KESİN RED NEDENLERİ: Eğer haber siyaset, politika, seçim, dini konular, mezhep, cemaat veya siyasi partilerle ilgiliyse VEYA negatif, trajik, şiddet içeren, suç, felaket veya acı odaklıysa, SADECE şu yanıtı ver: null
 2. Haberi tam olarak 3 paragrafta özetle. Minimum 150, maksimum 250 kelime kullan. Kesinlikle lafı uzatma ve gereksiz detaylara girme.
 3. Hem Türkçe hem de İngilizce versiyonunu oluştur. Her iki dilde de aynı derinlikte ve zenginlikte yaz.
 4. İçeriği olgusal tut ancak pozitif yönleri vurgula. Konunun neden önemli olduğunu, hangi sorunlara çözüm getirdiğini veya topluma nasıl ilham verdiğini açıkla.
