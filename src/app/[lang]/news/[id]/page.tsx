@@ -71,7 +71,7 @@ export default async function NewsDetailPage({
     <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
       {/* İyilik Serisi (Streak) Takipçisi */}
       <StreakTracker newsId={news.id} dict={dict} />
-      
+
       {/* Back button */}
       <Link
         href={`/${typedLang}`}
@@ -182,7 +182,7 @@ export default async function NewsDetailPage({
       </div>
 
       {/* Reactions & Report */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-t border-border mt-12">
         <div className="flex-1 w-full">
           <NewsReactions newsId={news.id} initialReactions={news.reactions} dict={dict} />
         </div>
@@ -193,7 +193,7 @@ export default async function NewsDetailPage({
 
       {/* Source link */}
       {news.source_url && (
-        <div className="mt-10 pt-6 border-t border-border">
+        <div className="pt-6 border-t border-border">
           <a
             href={news.source_url}
             target="_blank"

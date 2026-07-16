@@ -2,9 +2,10 @@ import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 import { getDictionary, hasLocale } from "@/lib/i18n/dictionaries";
 import type { Locale } from "@/lib/i18n/dictionaries";
-import { getNewsByLanguage } from "@/lib/supabase";
+import { getNewsByLanguage, getGlobalStats } from "@/lib/supabase";
 import Hero from "@/components/Hero";
 import NewsSlider from "@/components/NewsSlider";
+import PositiveStatsBar from "@/components/PositiveStatsBar";
 import NewsGrid from "@/components/NewsGrid";
 import Link from "next/link";
 
@@ -30,6 +31,7 @@ export default async function HomePage({
   const region = headersList.get("x-user-region") || "GLOBAL";
   
   const allNews = await getNewsByLanguage(typedLang, 30, 0, category, region);
+  const globalStats = await getGlobalStats();
 
   // Görseli olmayan haberleri client tarafında da sağlama al
   const allNewsWithImages = allNews.filter((item) => item.image_url);
@@ -39,7 +41,7 @@ export default async function HomePage({
 
   // İlk 5 haberi slider'a, kalanı grid'e ayır
   const sliderNews = regularNews.slice(0, 5);
-  const gridNews = regularNews.slice(5);
+  const gridNews = regularNews.slice(5, 17);
 
   return (
     <>
@@ -47,7 +49,10 @@ export default async function HomePage({
 
       {/* News Slider — en güncel 5 haber */}
       {sliderNews.length > 0 && !category && (
-        <NewsSlider news={sliderNews} lang={typedLang} dict={dict} />
+        <>
+          <NewsSlider news={sliderNews} lang={typedLang} dict={dict} />
+          <PositiveStatsBar dict={dict} initialStats={globalStats} />
+        </>
       )}
 
       {/* Breaking News Banner (Son Güzellikler) */}

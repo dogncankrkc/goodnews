@@ -19,8 +19,10 @@ export default function Hero({ dict }: { dict: Dictionary }) {
 
           {/* Title */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6 animate-fade-in-up delay-100 text-gray-900 dark:text-white">
-            {dict.hero.title}{" "}
+            {dict.hero.title && <>{dict.hero.title} </>}
             <span className="gradient-text">{dict.hero.titleHighlight}</span>
+            {/* @ts-ignore - titleSuffix is added to dictionaries */}
+            {dict.hero.titleSuffix && <> {dict.hero.titleSuffix}</>}
           </h1>
 
           {/* Subtitle */}

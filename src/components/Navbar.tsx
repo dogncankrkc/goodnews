@@ -7,6 +7,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import logoIcon from "../../public/logo-icon-latest.png";
 import logoFullEn from "../../public/logo-full.png";
 import logoFullTr from "../../public/logo-full-tr.png";
+import CollectiveGoodnessCounter from "./CollectiveGoodnessCounter";
 
 export default async function Navbar({ lang }: { lang: Locale }) {
   const dict = await getDictionary(lang);
@@ -47,6 +48,10 @@ export default async function Navbar({ lang }: { lang: Locale }) {
           {/* Navigation Links / Categories */}
           {/* Language Switcher */}
           <div className="flex items-center gap-3">
+            
+            <CollectiveGoodnessCounter dict={dict} />
+            
+            <div className="hidden md:block w-px h-5 bg-border mx-1" />
 
             <CategoryDropdown
               lang={lang}

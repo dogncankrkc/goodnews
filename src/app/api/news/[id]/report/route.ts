@@ -7,12 +7,13 @@ export async function POST(
 ) {
   try {
     const { id } = await params;
+    const { is_reporting } = await request.json();
 
     const supabase = createClient();
 
-    // The user mentioned the RPC function is report_news(p_news_id UUID)
     const { error } = await supabase.rpc("report_news", {
       p_news_id: id,
+      p_is_reporting: is_reporting,
     });
 
     if (error) {

@@ -37,7 +37,7 @@ export default function NewsReactions({ newsId, initialReactions, dict }: NewsRe
     const previousReaction = userReaction;
     const isToggle = previousReaction === type;
     const isSwap = previousReaction !== null && previousReaction !== type;
-    
+
     // Prepare API payload and determine optimistic state
     let oldReaction: ReactionType | null = null;
     let newReaction: ReactionType | null = type;
@@ -60,7 +60,7 @@ export default function NewsReactions({ newsId, initialReactions, dict }: NewsRe
       return next;
     });
     setUserReaction(newReaction);
-    
+
     // Save to localStorage
     const storageKey = `reacted_news_${newsId}`;
     if (newReaction) {
@@ -93,7 +93,7 @@ export default function NewsReactions({ newsId, initialReactions, dict }: NewsRe
         return next;
       });
       setUserReaction(previousReaction);
-      
+
       if (previousReaction) {
         localStorage.setItem(storageKey, previousReaction);
       } else {
@@ -121,7 +121,7 @@ export default function NewsReactions({ newsId, initialReactions, dict }: NewsRe
   }
 
   return (
-    <div className="mt-12 py-8 border-t border-border">
+    <div className="py-8 ">
       <h3 className="text-lg font-semibold mb-4 text-foreground">{dict.reactions.title}</h3>
       <div className="flex flex-wrap gap-3">
         {REACTION_OPTIONS.map((reaction) => {
@@ -131,11 +131,10 @@ export default function NewsReactions({ newsId, initialReactions, dict }: NewsRe
             <button
               key={reaction.type}
               onClick={() => handleReact(reaction.type)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm active:scale-95
-                ${
-                  isSelected
-                    ? `${reaction.activeColor} ring-2 ring-offset-1 ring-primary/20 dark:ring-offset-slate-950 scale-105`
-                    : "border-border bg-surface text-foreground hover:bg-gray-100 dark:hover:bg-slate-800"
+              className={`group flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm active:scale-95
+                ${isSelected
+                  ? `${reaction.activeColor} ring-2 ring-offset-1 ring-primary/20 dark:ring-offset-slate-950 scale-105`
+                  : "border-border bg-surface text-foreground hover:bg-gray-100 dark:hover:bg-slate-800"
                 }
               `}
               aria-label={`${dict.reactions[reaction.type as keyof typeof dict.reactions]} (${reactions[reaction.type]})`}
@@ -143,7 +142,7 @@ export default function NewsReactions({ newsId, initialReactions, dict }: NewsRe
               <span className={`text-xl transition-transform ${isSelected ? "scale-110" : ""}`}>
                 {reaction.emoji}
               </span>
-              <span className={isSelected ? "font-bold" : ""}>
+              <span className={isSelected ? "font-bold" : "group-hover:text-slate-900 dark:group-hover:text-white transition-colors"}>
                 {reactions[reaction.type]}
               </span>
             </button>

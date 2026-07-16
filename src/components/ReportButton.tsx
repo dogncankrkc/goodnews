@@ -22,28 +22,40 @@ export default function ReportButton({ newsId, dict }: ReportButtonProps) {
   }, [newsId]);
 
   const handleReport = async () => {
-    if (isReported || isLoading) return;
+    if (isLoading) return;
+
+    const isNowReporting = !isReported;
 
     // Optimistic Update
-    setIsReported(true);
+    setIsReported(isNowReporting);
     const storageKey = `reported_news_${newsId}`;
-    localStorage.setItem(storageKey, "true");
+    if (isNowReporting) {
+      localStorage.setItem(storageKey, "true");
+    } else {
+      localStorage.removeItem(storageKey);
+    }
 
     try {
       setIsLoading(true);
       const url = `${window.location.origin}/api/news/${newsId}/report`;
       const response = await fetch(url, {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ is_reporting: isNowReporting }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to report news");
+        throw new Error("Failed to toggle report");
       }
     } catch (error) {
-      console.error("Error reporting news:", error);
+      console.error("Error toggling report:", error);
       // Revert if failed
-      setIsReported(false);
-      localStorage.removeItem(storageKey);
+      setIsReported(!isNowReporting);
+      if (!isNowReporting) {
+        localStorage.setItem(storageKey, "true");
+      } else {
+        localStorage.removeItem(storageKey);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -68,15 +80,15 @@ export default function ReportButton({ newsId, dict }: ReportButtonProps) {
   return (
     <button
       onClick={handleReport}
-      disabled={isReported || isLoading}
+      disabled={isLoading}
       className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200
         ${
           isReported
-            ? "text-red-600 bg-red-50 dark:text-red-400 dark:bg-red-900/20 cursor-not-allowed"
+            ? "text-red-500 bg-red-50 dark:text-red-400 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-900/50"
             : "text-muted hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 active:scale-95"
         }
       `}
-      aria-label={dict.report.button}
+      aria-label={isReported ? dict.report.undoReport : dict.report.button}
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         {isReported ? (
@@ -92,7 +104,7 @@ export default function ReportButton({ newsId, dict }: ReportButtonProps) {
           </>
         )}
       </svg>
-      {isReported ? dict.report.reported : dict.report.button}
+      {isReported ? dict.report.undoReport : dict.report.button}
     </button>
   );
 }

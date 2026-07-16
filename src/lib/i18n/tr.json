@@ -13,6 +13,7 @@
     "badge": "✨ Özenle Seçilmiş Haberler",
     "title": "Dünyadan",
     "titleHighlight": "Güzel Haberler",
+    "titleSuffix": "",
     "subtitle": "Her gün özenle seçilen pozitif, umut verici ve ilham veren haberler. Çünkü güzel şeyler de haber değeri taşır.",
     "cta": "Haberleri Keşfet"
   },
@@ -57,7 +58,8 @@
   },
   "report": {
     "button": "Hatalı İçerik Bildir",
-    "reported": "Bildirildi"
+    "reported": "Bildirildi",
+    "undoReport": "Bildirimi Geri Al"
   },
   "grid": {
     "loadMore": "Daha Fazla Haber Yükle",
@@ -69,5 +71,17 @@
     "innovative": "Yenilikçi",
     "heartwarming": "İç Isıtan",
     "promising": "Gelecek Vaat Eden"
+  },
+  "stats": {
+    "title": "✨ Bugün Dünyada Neler Oldu?",
+    "trees": "Dikilen Ağaç Sayısı",
+    "energy": "Yenilenebilir Enerji (MWh)",
+    "pets": "Sahiplenilen Hayvan",
+    "plastic": "Temizlenen Plastik (Kg)",
+    "meals": "Kurtarılan Öğün"
+  },
+  "presence": {
+    "activeUsers": "Kişi Aktif",
+    "totalReads": "Pozitif Haber Okundu"
   }
 }

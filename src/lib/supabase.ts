@@ -185,3 +185,38 @@ export async function getNewsById(
 
   return resolveLocale(data as NewsRow, language);
 }
+
+/**
+ * Fetches the global positive statistics for the homepage bar.
+ */
+export type GlobalStats = {
+  trees: number;
+  energy: number;
+  pets: number;
+  plastic: number;
+  meals: number;
+};
+
+export async function getGlobalStats(): Promise<GlobalStats | null> {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.error("Missing Supabase configuration in getGlobalStats");
+    return null;
+  }
+
+  const supabase = createSupabaseClient(supabaseUrl, supabaseAnonKey);
+  const { data, error } = await supabase
+    .from("global_stats")
+    .select("trees, energy, pets, plastic, meals")
+    .eq("id", 1)
+    .single();
+
+  if (error || !data) {
+    // Return null if table doesn't exist yet or query fails, so client can fallback
+    return null;
+  }
+
+  return data as GlobalStats;
+}

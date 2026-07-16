@@ -11,8 +11,9 @@
   },
   "hero": {
     "badge": "✨ Handpicked Stories",
-    "title": "Positive Stories",
-    "titleHighlight": "From Around the World",
+    "title": "",
+    "titleHighlight": "Positive Stories",
+    "titleSuffix": "from around the world",
     "subtitle": "Every day, we carefully curates the most positive, hopeful, and inspiring news. Because good things deserve headlines too.",
     "cta": "Explore Stories"
   },
@@ -57,7 +58,8 @@
   },
   "report": {
     "button": "Report Inaccurate Content",
-    "reported": "Reported"
+    "reported": "Reported",
+    "undoReport": "Undo Report"
   },
   "grid": {
     "loadMore": "Load More News",
@@ -69,5 +71,17 @@
     "innovative": "Innovative",
     "heartwarming": "Heartwarming",
     "promising": "Promising"
+  },
+  "stats": {
+    "title": "✨ Today in the World...",
+    "trees": "Trees Planted",
+    "energy": "Renewable Energy (MWh)",
+    "pets": "Pets Adopted",
+    "plastic": "Ocean Plastic Cleaned (Kg)",
+    "meals": "Meals Rescued"
+  },
+  "presence": {
+    "activeUsers": "Active Users",
+    "totalReads": "Stories Read Today"
   }
 }
