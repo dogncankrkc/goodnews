@@ -8,6 +8,7 @@ import logoIcon from "../../public/logo-icon-latest.png";
 import logoFullEn from "../../public/logo-full.png";
 import logoFullTr from "../../public/logo-full-tr.png";
 import CollectiveGoodnessCounter from "./CollectiveGoodnessCounter";
+import BackgroundAudio from "./BackgroundAudio";
 
 export default async function Navbar({ lang }: { lang: Locale }) {
   const dict = await getDictionary(lang);
@@ -94,6 +95,7 @@ export default async function Navbar({ lang }: { lang: Locale }) {
               </svg>
               {otherLangLabel}
             </Link>
+            <BackgroundAudio />
             <ThemeToggle />
           </div>
         </div>
