@@ -35,19 +35,27 @@ export const RSS_FEEDS: string[] = [
   "https://www.positive.news/feed/",
   "https://www.optimistdaily.com/feed/",
   "https://www.reddit.com/r/UpliftingNews/.rss",
+  "https://www.reddit.com/r/MadeMeSmile/.rss",
+  "https://reasonstobecheerful.world/feed/",
 
-  // ── Türkiye kaynakları ───────────────────────────────────
+  // ── Türkiye kaynakları (Daha çok Teknoloji, Sanat, Yaşam) ──
   "https://www.ntv.com.tr/gundem.rss",
   "https://www.ntv.com.tr/dunya.rss",
   "https://www.ntv.com.tr/teknoloji.rss",
+  "https://www.ntv.com.tr/sanat.rss",
+  "https://www.ntv.com.tr/yasam.rss",
   "https://www.haberturk.com/rss/gundem.xml",
-  "https://www.cnnturk.com/feed/rss/turkiye/news",
-  "https://www.sozcu.com.tr/rss/gundem.xml",
+  "https://webrazzi.com/feed/",
+  "https://shiftdelete.net/feed",
+  "https://www.donanimhaber.com/rss/tum/",
 
-  // ── Global / EN sources ──────────────────────────────────
+  // ── Global / EN sources (Science, Tech & Global) ─────────
   "https://feeds.bbci.co.uk/news/world/rss.xml",
   "http://rss.cnn.com/rss/edition.rss",
   "https://www.theguardian.com/world/rss",
+  "https://techcrunch.com/feed/",
+  "https://www.theverge.com/rss/index.xml",
+  "https://www.nasa.gov/rss/dyn/breaking_news.rss",
 ];
 
 /**
