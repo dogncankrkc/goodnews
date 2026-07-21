@@ -46,6 +46,21 @@ export async function generateMetadata({
       template: `%s | ${siteTitle}`,
     },
     description: description,
+    manifest: "/site.webmanifest",
+    appleWebApp: {
+      capable: true,
+      title: siteTitle,
+      statusBarStyle: "default",
+    },
+    icons: {
+      icon: [
+        { url: "/favicon.ico" },
+        { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      ],
+      apple: [
+        { url: "/apple-icon.png" },
+      ],
+    },
     openGraph: {
       title: siteTitle,
       description: description,
